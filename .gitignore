@@ -1,0 +1,5 @@
+venv/
+App/venv/
+__pycache__/
+*.pyc
+Project-Proposal-NLP

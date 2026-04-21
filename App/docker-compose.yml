@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  resume-api:
+    build: .
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./uploads:/app/uploads
+      - ./resumes:/app/resumes
+    environment:
+      - FLASK_ENV=development
+    restart: unless-stopped
+    container_name: resume-shortlisting-api
