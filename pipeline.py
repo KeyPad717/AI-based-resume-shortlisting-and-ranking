@@ -24,7 +24,7 @@ except OSError:
 
 client = openai.OpenAI(
     base_url="https://openrouter.ai/api/v1",
-    api_key=os.environ.get("OPENROUTER_API_KEY", "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"),
+    api_key=os.environ.get("OPENROUTER_API_KEY"),
 )
 
 REQUIRED_CUES = ["must have", "required", "requirements", "mandatory", "essential", "should have", "you should have", "we are looking for"]
