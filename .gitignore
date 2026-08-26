@@ -43,8 +43,6 @@ App/uploads/
 App/resumes/
 uploads/
 resumes/
-*.pdf
-*.docx
 
 # Node.js
 node_modules/
@@ -59,6 +57,38 @@ ai-based-resume-shortlisting/dist/
 # OS Metadata
 .DS_Store
 Thumbs.db
+
+# Reports & Documents
+*.pdf
+*.docx
+*.doc
+*.pptx
+*.ppt
+*.xlsx
+*.xls
+*.csv
+Resume-Shortlisting-Report/
+Codebook/
+extracted_images/
+NLP_Report_merged.pdf
+Project-Proposal-NLP.pdf
+PROJECT_REPORT.md
+
+# Images
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.svg
+
+# Jupyter Notebooks
+*.ipynb
+.ipynb_checkpoints/
+
+# Temp & Cache
+*.log
+*.bak
+*.tmp
 
 # IDEs
 .vscode/

@@ -37,9 +37,16 @@ async def score_candidates(
     if not resume_files or len(resume_files) == 0:
         raise HTTPException(status_code=400, detail="Resume files missing")
 
+    allowed_exts = {".pdf", ".docx"}
+    if not os.path.splitext(jd_file.filename)[1].lower() in allowed_exts:
+        raise HTTPException(status_code=400, detail=f"Unsupported JD file type: {jd_file.filename}. Only PDF and DOCX are accepted.")
+    for r_file in resume_files:
+        if r_file.filename and os.path.splitext(r_file.filename)[1].lower() not in allowed_exts:
+            raise HTTPException(status_code=400, detail=f"Unsupported resume file type: {r_file.filename}. Only PDF and DOCX are accepted.")
+
     with tempfile.TemporaryDirectory() as tmpdir:
         # Save JD
-        jd_path = os.path.join(tmpdir, jd_file.filename)
+        jd_path = os.path.join(tmpdir, os.path.basename(jd_file.filename))
         with open(jd_path, "wb") as f:
             shutil.copyfileobj(jd_file.file, f)
             
@@ -47,7 +54,7 @@ async def score_candidates(
         resume_paths = []
         for r_file in resume_files:
             if not r_file.filename: continue
-            path = os.path.join(tmpdir, r_file.filename)
+            path = os.path.join(tmpdir, os.path.basename(r_file.filename))
             with open(path, "wb") as f:
                 shutil.copyfileobj(r_file.file, f)
             resume_paths.append(path)

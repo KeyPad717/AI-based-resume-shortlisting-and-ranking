@@ -7,7 +7,11 @@ import spacy
 import pdfplumber
 import openai
 import math
+import time
 from pathlib import Path
+from dotenv import load_dotenv
+
+load_dotenv()
 
 from sentence_transformers import SentenceTransformer, CrossEncoder, util
 
@@ -18,13 +22,16 @@ reranker_model = CrossEncoder("cross-encoder/ms-marco-MiniLM-L-6-v2")
 try:
     nlp = spacy.load("en_core_sci_sm")
     nlp.add_pipe("abbreviation_detector")
-except OSError:
-    print("Falling back to regular spaCy")
+except (OSError, ValueError) as e:
+    print(f"Falling back to regular spaCy ({e})")
     nlp = spacy.load("en_core_web_sm")
+
+if not os.environ.get("OPENROUTER_API_KEY"):
+    print("WARNING: OPENROUTER_API_KEY not set. LLM extraction will be skipped; rule-based fallback will be used for all documents.")
 
 client = openai.OpenAI(
     base_url="https://openrouter.ai/api/v1",
-    api_key=os.environ.get("OPENROUTER_API_KEY"),
+    api_key=os.environ.get("OPENROUTER_API_KEY") or "not-needed",
 )
 
 REQUIRED_CUES = ["must have", "required", "requirements", "mandatory", "essential", "should have", "you should have", "we are looking for"]
@@ -95,9 +102,9 @@ def compute_reranker_score(jd_text, resume_text):
     score = reranker_model.predict([jd_text[:1200], resume_text[:1200]])
     return float(1 / (1 + math.exp(-score / 1.5)))
 
-def compute_evidence_score(matched_skills, exp_text, projects):
+def compute_evidence_score(matched_skills, resume_text, projects):
     if not matched_skills: return 0.0
-    text = (str(exp_text) * 2 + " " + " ".join(map(str, projects))).lower()
+    text = (resume_text + " " + " ".join(map(str, projects))).lower()
     count = sum(1 for skill in matched_skills if normalize_skill(skill) in text)
     return float(count / len(matched_skills))
 
@@ -160,7 +167,7 @@ def rule_based_fallback_extraction(text, is_jd=False):
     if exp_matches:
         try:
             years = max([int(m) for m in exp_matches])
-        except: pass
+        except ValueError: pass
             
     name = ""
     if not is_jd:
@@ -195,6 +202,7 @@ def call_llm_extraction(text, is_jd=False, retries=2):
             if attempt == retries - 1:
                 print(f"LLM Extraction failed, running deterministic fallback. Error: {e}")
                 return rule_based_fallback_extraction(text, is_jd)
+            time.sleep(1 * (attempt + 1))
 
 def validate_experience(exp):
     if exp > 10: return 5.0
@@ -206,6 +214,16 @@ def compute_experience_years(experience_list, resume_text, is_jd=False):
     return validate_experience(total)
 
 def validate_extracted_struct(struct, resume_text, is_jd=False):
+    if struct is None:
+        return {
+            "name": "",
+            "skills": [],
+            "experience_years": 0,
+            "experience_breakdown": [],
+            "education": [],
+            "projects": [],
+            "semantic_summary": ""
+        }
     exp_entries = struct.get("experience", [])
     return {
         "name": struct.get("candidate_name", "").strip(),
@@ -233,9 +251,12 @@ def split_jd_sections(text):
 
 def normalize_weights(weights):
     total = sum(weights.values())
-    return {k: v / total for k, v in weights.items()} if total > 0 else weights
+    if total <= 0:
+        weights = {"required_skills": 0.32, "semantic": 0.16, "reranker": 0.16, "experience": 0.10, "education": 0.06, "projects": 0.07, "evidence": 0.13}
+        total = sum(weights.values())
+    return {k: v / total for k, v in weights.items()}
 
-def parse_jd_requirements(jd_text, jd_struct):
+def parse_jd_requirements(jd_text, jd_struct, user_weights=None):
     sections = split_jd_sections(jd_text)
     all_skills = jd_struct["skills"]
     req_text_lower = sections["required_text"].lower()
@@ -243,17 +264,21 @@ def parse_jd_requirements(jd_text, jd_struct):
     required_skills = [s for s in all_skills if s.lower() in req_text_lower] or all_skills[:10]
     preferred_skills = [s for s in all_skills if s.lower() in pref_text_lower and s.lower() not in {r.lower() for r in required_skills}]
 
-    weights = {"required_skills": 0.32, "semantic": 0.16, "reranker": 0.16, "experience": 0.10, "education": 0.06, "projects": 0.07, "evidence": 0.13}
-    if any(kw in jd_text.lower() for kw in ["senior", "lead", "years of experience"]):
-        weights["experience"] += 0.10; weights["semantic"] -= 0.10
-    if jd_struct["experience_years"] == 0:
-        weights["required_skills"] += weights["experience"] * 0.5
-        weights["projects"] += weights["experience"] * 0.5
-        weights["experience"] = 0.0
-    if not jd_struct["education"]:
-        weights["reranker"] += weights["education"] * 0.5
-        weights["semantic"] += weights["education"] * 0.5
-        weights["education"] = 0.0
+    if user_weights:
+        # Use user weights but ensure they are float 0-1
+        weights = {k: max(0, float(v)) / 100.0 for k, v in user_weights.items()}
+    else:
+        weights = {"required_skills": 0.32, "semantic": 0.16, "reranker": 0.16, "experience": 0.10, "education": 0.06, "projects": 0.07, "evidence": 0.13}
+        if any(kw in jd_text.lower() for kw in ["senior", "lead", "years of experience"]):
+            weights["experience"] += 0.10; weights["semantic"] -= 0.10
+        if jd_struct["experience_years"] == 0:
+            weights["required_skills"] += weights["experience"] * 0.5
+            weights["projects"] += weights["experience"] * 0.5
+            weights["experience"] = 0.0
+        if not jd_struct["education"]:
+            weights["reranker"] += weights["education"] * 0.5
+            weights["semantic"] += weights["education"] * 0.5
+            weights["education"] = 0.0
 
     return {"required_skills": required_skills, "preferred_skills": preferred_skills, "experience_years": jd_struct["experience_years"], "education": jd_struct["education"], "weights": normalize_weights(weights)}
 
@@ -284,7 +309,7 @@ def experience_score(jd_years, resume_years):
     if jd_years <= 0: return float(min(0.5 + (resume_years * 0.5), 1.0))
     ratio = resume_years / jd_years
     score = ratio if ratio < 1.0 else 1.0 + (min(ratio - 1.0, 0.2) * 0.5)
-    return float(round(min(score, 1.2), 3))
+    return float(round(min(score, 1.0), 3))
 
 def project_score(jd_text, project_list, model):
     if not project_list: return 0.0
@@ -303,11 +328,11 @@ def generate_explanation(result):
     if result.get("experience_years"): explanation += f"Has {result['experience_years']:.1f} years of professional experience. "
     return explanation + (f"Gaps identified in: {top_missing}." if top_missing else "Closely matches all key required skills.")
 
-def process_resumes(jd_file_path, resume_file_paths):
+def process_resumes(jd_file_path, resume_file_paths, user_weights=None):
     jd_raw = extract_text(jd_file_path)
     jd_text = fix_numbers(clean_text(jd_raw))
     jd_struct = validate_extracted_struct(call_llm_extraction(jd_text, is_jd=True), jd_text, is_jd=True)
-    jd_reqs = parse_jd_requirements(jd_text, jd_struct)
+    jd_reqs = parse_jd_requirements(jd_text, jd_struct, user_weights=user_weights)
 
     results = []
     for r_path in resume_file_paths:
@@ -317,8 +342,8 @@ def process_resumes(jd_file_path, resume_file_paths):
             r_struct = validate_extracted_struct(call_llm_extraction(r_text, is_jd=False), r_text, is_jd=False)
             
             # Use filename as fallback candidate name
-            filename_name = re.sub(r"\\b(mt|bt|cv|resume|updated|final|copy|sde)\\b", " ", Path(r_path).stem, flags=re.IGNORECASE)
-            filename_name = re.sub(r"[^a-zA-Z\\s]", "", filename_name).strip().title()
+            filename_name = re.sub(r"\b(mt|bt|cv|resume|updated|final|copy|sde)\b", " ", Path(r_path).stem, flags=re.IGNORECASE)
+            filename_name = re.sub(r"[^a-zA-Z\s]", "", filename_name).strip().title()
             
             cand_name = r_struct["name"] if r_struct["name"] else filename_name
 
@@ -335,7 +360,7 @@ def process_resumes(jd_file_path, resume_file_paths):
             else:
                 rerank_scr = sem_scr * 0.6  # Give a scaled down score without doing expensive compute
                 
-            ev_scr = compute_evidence_score(matched, r_struct["experience_breakdown"], r_struct["projects"])
+            ev_scr = compute_evidence_score(matched, r_text, r_struct["projects"])
 
             weights = jd_reqs["weights"]
             final = sum([
