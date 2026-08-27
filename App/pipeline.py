@@ -249,6 +249,40 @@ def split_jd_sections(text):
         "preferred_text": "\n".join(pref_parts)
     }
 
+def classify_requirement_type(jd_text, skills, retries=2):
+    skill_list = "\n".join(f"- {s}" for s in skills)
+    prompt = f"""
+You are analyzing a job description. Classify each skill below as either REQUIRED (mandatory, must-have) or PREFERRED (optional, nice-to-have, plus) based on how the job description text describes each skill.
+
+Job description:
+{jd_text[:4000]}
+
+Skills to classify:
+{skill_list}
+
+OUTPUT FORMAT (STRICT JSON ONLY):
+{{"required": ["skill1", "skill2"], "preferred": ["skill3"]}}
+"""
+    for attempt in range(retries):
+        try:
+            response = client.chat.completions.create(
+                model="openai/gpt-4o-mini",
+                messages=[{"role": "user", "content": prompt}],
+                response_format={"type": "json_object"}
+            )
+            raw = response.choices[0].message.content.strip()
+            raw = re.sub(r'^```json\s*|^```\s*|```$', '', raw, flags=re.MULTILINE).strip()
+            result = json.loads(raw)
+            if isinstance(result, dict) and isinstance(result.get("required"), list) and isinstance(result.get("preferred"), list):
+                return result
+            return None
+        except Exception as e:
+            if attempt == retries - 1:
+                print(f"Requirement classification failed, using keyword fallback. Error: {e}")
+                return None
+            time.sleep(1 * (attempt + 1))
+    return None
+
 def normalize_weights(weights):
     total = sum(weights.values())
     if total <= 0:
@@ -257,12 +291,19 @@ def normalize_weights(weights):
     return {k: v / total for k, v in weights.items()}
 
 def parse_jd_requirements(jd_text, jd_struct, user_weights=None):
-    sections = split_jd_sections(jd_text)
     all_skills = jd_struct["skills"]
-    req_text_lower = sections["required_text"].lower()
-    pref_text_lower = sections["preferred_text"].lower()
-    required_skills = [s for s in all_skills if s.lower() in req_text_lower] or all_skills[:10]
-    preferred_skills = [s for s in all_skills if s.lower() in pref_text_lower and s.lower() not in {r.lower() for r in required_skills}]
+    classification = classify_requirement_type(jd_text, all_skills)
+    if classification and (classification["required"] or classification["preferred"]):
+        req_lower = {r.lower() for r in classification.get("required", [])}
+        pref_lower = {p.lower() for p in classification.get("preferred", [])}
+        required_skills = [s for s in all_skills if s.lower() in req_lower] or all_skills[:10]
+        preferred_skills = [s for s in all_skills if s.lower() in pref_lower and s.lower() not in {r.lower() for r in required_skills}]
+    else:
+        sections = split_jd_sections(jd_text)
+        req_text_lower = sections["required_text"].lower()
+        pref_text_lower = sections["preferred_text"].lower()
+        required_skills = [s for s in all_skills if s.lower() in req_text_lower] or all_skills[:10]
+        preferred_skills = [s for s in all_skills if s.lower() in pref_text_lower and s.lower() not in {r.lower() for r in required_skills}]
 
     if user_weights:
         # Use user weights but ensure they are float 0-1
