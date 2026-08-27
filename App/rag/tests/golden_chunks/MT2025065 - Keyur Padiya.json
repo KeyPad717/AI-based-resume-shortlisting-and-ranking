@@ -1,0 +1,114 @@
+[
+  {
+    "chunk_id": "077bd2fa:00",
+    "candidate_id": "077bd2fa26541cb3",
+    "raw_text": "Keyur Sanjaykumar Padiya\nInternational Institute of Information Technology, Bangalore\n# (cid:239) \u00a7 (cid:131) +91 6355100462 keyworkmail2@gmail.com LinkedIn GitHub",
+    "char_start": 0,
+    "char_end": 163,
+    "meta": {
+      "candidate_id": "077bd2fa26541cb3",
+      "chunk_id": "077bd2fa:00",
+      "section_type": "other",
+      "chunker_version": "v1",
+      "embed_model": "sentence-transformers/all-mpnet-base-v2"
+    }
+  },
+  {
+    "chunk_id": "077bd2fa:01",
+    "candidate_id": "077bd2fa26541cb3",
+    "raw_text": "International Institute of Information Technology, Bangalore 2025 \u2013 Present\nM.Tech in Computer Science and Engineering CGPA: 3.48/4\nMadhuben & Bhanubhai Patel Institute of Technology, CVM University 2020 \u2013 2024\nB.Tech in Computer Engineering CGPA: 3.3/4",
+    "char_start": 174,
+    "char_end": 427,
+    "meta": {
+      "candidate_id": "077bd2fa26541cb3",
+      "chunk_id": "077bd2fa:01",
+      "section_type": "education",
+      "chunker_version": "v1",
+      "embed_model": "sentence-transformers/all-mpnet-base-v2"
+    }
+  },
+  {
+    "chunk_id": "077bd2fa:02",
+    "candidate_id": "077bd2fa26541cb3",
+    "raw_text": "Languages Tools / Platforms\nC, C++, Python, Java, SQL, Bash Git, Linux, MySQL, Optuna, Swagger, REST APIs\nFrameworks / Libraries Currently Learning\nReact, XGBoost, scikit-learn, Pandas Jenkins, Ansible, Docker, SPARQL, Spring Boot",
+    "char_start": 445,
+    "char_end": 675,
+    "meta": {
+      "candidate_id": "077bd2fa26541cb3",
+      "chunk_id": "077bd2fa:02",
+      "section_type": "skills",
+      "chunker_version": "v1",
+      "embed_model": "sentence-transformers/all-mpnet-base-v2"
+    }
+  },
+  {
+    "chunk_id": "077bd2fa:03",
+    "candidate_id": "077bd2fa26541cb3",
+    "raw_text": "\u00a7 Semantic Integration of Institutional Data | RDF, OWL, SPARQL, Python Feb 2026 \u2013 Present\n\u2022 Designing a knowledge graph to integrate heterogeneous institutional data using Semantic Web technologies\n\u2022 Developing data ingestion pipelines using APIs and HTML scraping to extract and normalize data from multiple sources\n\u2022 Automating transformation of raw data into RDF triples for unified querying using SPARQL\n\u00a7 Scientific Calculator CI/CD Pipeline | Python, Jenkins, Docker, Ansible Jan 2026 \u2013 Mar 2026\n\u2022 Designed a CLI-based scientific calculator and implemented automated unit testing using Pytest integrated into Jenkins\n\u2022 Built and containerized the application using Docker and pushed images to Docker Hub with automated versioning",
+    "char_start": 685,
+    "char_end": 1421,
+    "meta": {
+      "candidate_id": "077bd2fa26541cb3",
+      "chunk_id": "077bd2fa:03",
+      "section_type": "projects",
+      "chunker_version": "v1",
+      "embed_model": "sentence-transformers/all-mpnet-base-v2"
+    }
+  },
+  {
+    "chunk_id": "077bd2fa:04",
+    "candidate_id": "077bd2fa26541cb3",
+    "raw_text": "Implemented end-to-end CI/CD workflow and configured Ansible playbooks for container deployment\n\u00a7 Banking Management System | C, Linux, System Calls Aug 2025 \u2013 Nov 2025\n\u2022 Developed a multi-user CLI banking system implementing process synchronization and file locking\n\u2022 Ensured ACID properties for financial transactions using atomic file updates and consistency checks\n\u2022 Designed modular architecture supporting Customer, Employee, Manager, and Admin workflows\n\u00a7 Obesity Level Classification | Python, XGBoost, Optuna Aug 2025 \u2013 Nov 2025\n\u2022 Implemented multi-class classification using ensemble methods including Bagging, Random Forest, and XGBoost\n\u2022 Engineered domain-specific features improving model performance before Bayesian optimization\n\u2022 Optimized XGBoost using Bayesian hyperparameter tuning (Optuna), achieving 91% accuracy",
+    "char_start": 1424,
+    "char_end": 2256,
+    "meta": {
+      "candidate_id": "077bd2fa26541cb3",
+      "chunk_id": "077bd2fa:04",
+      "section_type": "projects",
+      "chunker_version": "v1",
+      "embed_model": "sentence-transformers/all-mpnet-base-v2"
+    }
+  },
+  {
+    "chunk_id": "077bd2fa:05",
+    "candidate_id": "077bd2fa26541cb3",
+    "raw_text": "Ozibook Tech Solutions Pvt. Ltd. Dec 2022 \u2013 Feb 2023\nBusiness Analyst Intern Bangalore, India\n\u2022 Conducted business research and analysis focusing on key performance metrics to support data-driven decision making\n\u2022 Led project coordination from concept to completion, ensuring timely execution and stakeholder alignment\n\u2022 Collaborated with cross-functional teams to streamline process workflows and improve operational efficiency\n\u2022 Analyzed existing process flows and proposed structured process improvements to enhance productivity",
+    "char_start": 2268,
+    "char_end": 2799,
+    "meta": {
+      "candidate_id": "077bd2fa26541cb3",
+      "chunk_id": "077bd2fa:05",
+      "section_type": "experience",
+      "chunker_version": "v1",
+      "embed_model": "sentence-transformers/all-mpnet-base-v2"
+    }
+  },
+  {
+    "chunk_id": "077bd2fa:06",
+    "candidate_id": "077bd2fa26541cb3",
+    "raw_text": "Central Committee, MBIT Feb 2023 \u2013 Feb 2024\n\u2022 Technical Secretary:- Organized and managed technical and non-technical events at institute level",
+    "char_start": 2829,
+    "char_end": 2972,
+    "meta": {
+      "candidate_id": "077bd2fa26541cb3",
+      "chunk_id": "077bd2fa:06",
+      "section_type": "leadership",
+      "chunker_version": "v1",
+      "embed_model": "sentence-transformers/all-mpnet-base-v2"
+    }
+  },
+  {
+    "chunk_id": "077bd2fa:07",
+    "candidate_id": "077bd2fa26541cb3",
+    "raw_text": "Data Structures, Machine Learning, Database Management, Operating Systems, Algorithms, Computer Architecture,\nSoftware Systems, Software Production Engineering, Enterprise Software Development",
+    "char_start": 2995,
+    "char_end": 3187,
+    "meta": {
+      "candidate_id": "077bd2fa26541cb3",
+      "chunk_id": "077bd2fa:07",
+      "section_type": "coursework",
+      "chunker_version": "v1",
+      "embed_model": "sentence-transformers/all-mpnet-base-v2"
+    }
+  }
+]

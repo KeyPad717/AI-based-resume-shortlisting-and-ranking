@@ -1,0 +1,100 @@
+[
+  {
+    "chunk_id": "9e86bb80:00",
+    "candidate_id": "9e86bb8002b601a6",
+    "raw_text": "Aditya Dave\nInternational Institute of Information Technology, Bangalore\n(cid:131) linkedin.com/in/aditya-dave-5757a2223/ 9316281792 Aditya.Dave@iiitb.ac.in github.com/adityadave29 # (cid:239) \u00a7",
+    "char_start": 0,
+    "char_end": 194,
+    "meta": {
+      "candidate_id": "9e86bb8002b601a6",
+      "chunk_id": "9e86bb80:00",
+      "section_type": "other",
+      "chunker_version": "v1",
+      "embed_model": "sentence-transformers/all-mpnet-base-v2"
+    }
+  },
+  {
+    "chunk_id": "9e86bb80:01",
+    "candidate_id": "9e86bb8002b601a6",
+    "raw_text": "International Institute of Information Technology, Bangalore July 2025 \u2013 May 2027\nM.Tech. in Computer Science and Engineering CGPA: 3.72 / 4.00\nAhmedabad University, Ahmedabad August 2021 \u2013 May 2025\nB.Tech. in Computer Science and Engineering CGPA: 3.13 / 4.00",
+    "char_start": 205,
+    "char_end": 465,
+    "meta": {
+      "candidate_id": "9e86bb8002b601a6",
+      "chunk_id": "9e86bb80:01",
+      "section_type": "education",
+      "chunker_version": "v1",
+      "embed_model": "sentence-transformers/all-mpnet-base-v2"
+    }
+  },
+  {
+    "chunk_id": "9e86bb80:02",
+    "candidate_id": "9e86bb8002b601a6",
+    "raw_text": "Ahmedabad University Ahmedabad\nApp Developer December 2024 \u2013 May 2025\n\u2013 Developed a cross-platform digital marketplace to help Sristi Foundation bring small-scale organic farmers online,\nenabling D2C sales, community-driven knowledge sharing, and increased awareness of organic farming practices.\n\u2013 Built a Flutter-based single codebase application backed by a normalized SQL database on Supabase, implementing\nfarmer onboarding and document-based verification, product listing and cart workflows, community feeds with\ncategory-based filtering, search and notifications, multilingual news translation with text-to-speech, admin dashboards for\nverificationand ordermonitoring, andabehavior-based MLrecommendationsystem forpersonalizedproductdiscovery.\n\u2013 Successfully onboarded 10+ verified farmers and 40+ product listings in a pilot deployment, digitized manual\nonboarding and order workflows reducing verification effort by 40%.",
+    "char_start": 477,
+    "char_end": 1406,
+    "meta": {
+      "candidate_id": "9e86bb8002b601a6",
+      "chunk_id": "9e86bb80:02",
+      "section_type": "experience",
+      "chunker_version": "v1",
+      "embed_model": "sentence-transformers/all-mpnet-base-v2"
+    }
+  },
+  {
+    "chunk_id": "9e86bb80:03",
+    "candidate_id": "9e86bb8002b601a6",
+    "raw_text": "Data Warehouse | MySQL December 2025\n\u2013 Designed an end-to-end data warehouse using the Medallion (Bronze\u2013Silver\u2013Gold) architecture to consolidate\nraw CRM and ERP data for structured analytics and reporting.\n\u2013 Implemented ETL pipelines in MySQL for data ingestion, cleansing, transformation, and enrichment, modeling clean\nfact and dimension tables optimized for analytical queries.\n\u2013 Enabled reliable KPI dashboards, YoY analysis, and cumulative sales reporting by improving data quality,\nconsistency, and query performance across analytical workloads.\nWearable-Driven Exercise Recognition | Python, Jupyter Notebook December 2025\n\u2013 Developed a wearable-driven barbell exercise recognition and repetition counting system using real-world\naccelerometer and gyroscope (IMU) sensor data collected from gym workouts.\n\u2013 Performed end-to-end signal preprocessing including resampling, noise reduction via low-pass filtering, outlier\nhandling",
+    "char_start": 1416,
+    "char_end": 2351,
+    "meta": {
+      "candidate_id": "9e86bb8002b601a6",
+      "chunk_id": "9e86bb80:03",
+      "section_type": "projects",
+      "chunker_version": "v1",
+      "embed_model": "sentence-transformers/all-mpnet-base-v2"
+    }
+  },
+  {
+    "chunk_id": "9e86bb80:04",
+    "candidate_id": "9e86bb8002b601a6",
+    "raw_text": "and extensive time-domain and frequency-domain feature extraction (FFT, temporal statistics),\nfollowed by PCA-based dimensionality reduction.\n\u2013 Achieved 99.25% exercise classification accuracy using a Neural Network and XGBoost, and attained 98.98%\naccuracy in repetition counting through peak detection on filtered sensor signals.\nBank Management System | C Programming, System Programming, Concurrency September 2025\n\u2013 Developed a multi-user Bank Management System in C using socket programming with role-based access control\n(Admin, Manager, Employee, Customer).\n\u2013 Implemented modular server architecture with authentication, transaction processing, loan management, and\npersistent file-based storage using structured flat files.\n\u2013 Designed a scalable client-server system with low-level networking, concurrent client handling, and real-world\nbanking workflow simulation.",
+    "char_start": 2353,
+    "char_end": 3227,
+    "meta": {
+      "candidate_id": "9e86bb8002b601a6",
+      "chunk_id": "9e86bb80:04",
+      "section_type": "projects",
+      "chunker_version": "v1",
+      "embed_model": "sentence-transformers/all-mpnet-base-v2"
+    }
+  },
+  {
+    "chunk_id": "9e86bb80:05",
+    "candidate_id": "9e86bb8002b601a6",
+    "raw_text": "Languages: C++, Python, JavaScript, SQL\nLibraries & Frameworks: React.js, Tailwind CSS, Spring Boot, Pandas, NumPy, Scikit-learn, Flutter\nTools & Miscellaneous: Git, GitHub, Linux, VS Code, Postman, Figma, Supabase, Google Colab\nOngoing Technical Development: Jenkins, Docker, Ansible, Computer vision, NLP, Golang",
+    "char_start": 3245,
+    "char_end": 3559,
+    "meta": {
+      "candidate_id": "9e86bb8002b601a6",
+      "chunk_id": "9e86bb80:05",
+      "section_type": "skills",
+      "chunker_version": "v1",
+      "embed_model": "sentence-transformers/all-mpnet-base-v2"
+    }
+  },
+  {
+    "chunk_id": "9e86bb80:06",
+    "candidate_id": "9e86bb8002b601a6",
+    "raw_text": "Secured GATE CS 2025 Rank 1545 among 170,825 candidates with a score of 681. \u2022\nAwarded a 100% merit-based tuition scholarship for 4 years at Ahmedabad University for academic excellence in \u2022\nClass 12, ranking in the top 1% with an ACPC rank of 368.",
+    "char_start": 3582,
+    "char_end": 3830,
+    "meta": {
+      "candidate_id": "9e86bb8002b601a6",
+      "chunk_id": "9e86bb80:06",
+      "section_type": "achievements",
+      "chunker_version": "v1",
+      "embed_model": "sentence-transformers/all-mpnet-base-v2"
+    }
+  }
+]

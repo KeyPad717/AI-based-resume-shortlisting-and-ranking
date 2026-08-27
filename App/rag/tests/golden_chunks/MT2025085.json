@@ -1,0 +1,114 @@
+[
+  {
+    "chunk_id": "a99c326a:00",
+    "candidate_id": "a99c326a282a4720",
+    "raw_text": "Parva Parmar\nInternational Institute of Information Technology, Bangalore\n(cid:131) +91 8200793037 Parva.Parmar@iiitb.ac.in linkedin.com/in/parva-parmar github.com/Parva-Parmar # (cid:239) \u00a7",
+    "char_start": 0,
+    "char_end": 190,
+    "meta": {
+      "candidate_id": "a99c326a282a4720",
+      "chunk_id": "a99c326a:00",
+      "section_type": "other",
+      "chunker_version": "v1",
+      "embed_model": "sentence-transformers/all-mpnet-base-v2"
+    }
+  },
+  {
+    "chunk_id": "a99c326a:01",
+    "candidate_id": "a99c326a282a4720",
+    "raw_text": "International Institute of Information Technology, Bangalore July 2025 \u2013 June 2027\nM.Tech. in Computer Science and Engineering 3.05/4\nAhmedabad University, Ahmedabad August 2021 \u2013 June 2025\nB.Tech. in Computer Science and Engineering 3.16/4\nAtul Vidyalaya, Valsad June 2006 \u2013 March 2021\n12th Science 97.8/100",
+    "char_start": 201,
+    "char_end": 509,
+    "meta": {
+      "candidate_id": "a99c326a282a4720",
+      "chunk_id": "a99c326a:01",
+      "section_type": "education",
+      "chunker_version": "v1",
+      "embed_model": "sentence-transformers/all-mpnet-base-v2"
+    }
+  },
+  {
+    "chunk_id": "a99c326a:02",
+    "candidate_id": "a99c326a282a4720",
+    "raw_text": "Cloudi - Cloud Based Compiler | JavaScript, Prometheus, Docker, Socket Programming, VMs September 2024\nDeveloped a browser-based cloud compiler enabling users to write, compile, and execute code in multiple programming \u2022\nlanguages in real-time.\nDesigned an intuitive frontend using React.js to support dynamic code execution feedback \u2022\nRemoved the requirement for local setup by supporting program execution directly in the browser. \u2022\nSource Locating Algorithm in Network Graphs | Python, NetworkX, Jupyter Dec. 2024 \u2013 Apr 2025\nDeveloped an analytical framework to identify the origin of an infection or information spread in complex networks using \u2022\ngraph theory.\nSimulated network infection propagation and employed reverse tracing methods to infer the most probable source nodes.",
+    "char_start": 519,
+    "char_end": 1301,
+    "meta": {
+      "candidate_id": "a99c326a282a4720",
+      "chunk_id": "a99c326a:02",
+      "section_type": "projects",
+      "chunker_version": "v1",
+      "embed_model": "sentence-transformers/all-mpnet-base-v2"
+    }
+  },
+  {
+    "chunk_id": "a99c326a:03",
+    "candidate_id": "a99c326a282a4720",
+    "raw_text": "Utilized to generate synthetic graphs (e.g., scale-free, random, small-world) and compute structural properties NetworkX \u2022\nlike hop distance and diameter.\nImplemented bipartite graph matching to compare reserve-state and state-based inference for source identification. \u2022\nVisualized infection spread and prediction accuracy using Matplotlib to support comparative analysis.",
+    "char_start": 1304,
+    "char_end": 1677,
+    "meta": {
+      "candidate_id": "a99c326a282a4720",
+      "chunk_id": "a99c326a:03",
+      "section_type": "projects",
+      "chunker_version": "v1",
+      "embed_model": "sentence-transformers/all-mpnet-base-v2"
+    }
+  },
+  {
+    "chunk_id": "a99c326a:04",
+    "candidate_id": "a99c326a282a4720",
+    "raw_text": "Languages: C++,C,JavaScript,Type Script, Python, Java\nTechnologies/Frameworks: Linux, Git, GitHub, VS code, ReactJS, NodeJS, PosgreSQL, Postman",
+    "char_start": 1697,
+    "char_end": 1840,
+    "meta": {
+      "candidate_id": "a99c326a282a4720",
+      "chunk_id": "a99c326a:04",
+      "section_type": "skills",
+      "chunker_version": "v1",
+      "embed_model": "sentence-transformers/all-mpnet-base-v2"
+    }
+  },
+  {
+    "chunk_id": "a99c326a:05",
+    "candidate_id": "a99c326a282a4720",
+    "raw_text": "Computer Networks Social Network Analysis Algorithms Analysis Data Structures \u2022 \u2022 \u2022 \u2022\nCloud Computing Operating system Database Management Software Engineering",
+    "char_start": 1861,
+    "char_end": 2020,
+    "meta": {
+      "candidate_id": "a99c326a282a4720",
+      "chunk_id": "a99c326a:05",
+      "section_type": "coursework",
+      "chunker_version": "v1",
+      "embed_model": "sentence-transformers/all-mpnet-base-v2"
+    }
+  },
+  {
+    "chunk_id": "a99c326a:06",
+    "candidate_id": "a99c326a282a4720",
+    "raw_text": "ACM Ahmedabad University Student Chapter Nov. 2023 \u2013 Nov. 2024\nInvestigation Lead Ahmedabad University\nHosted ACM Winter school on network science 10 days event hosted by Ahmedabad university \u2022\nDelivered a hands on tutorial on Gephi a tool used for visualization of infromation networks \u2022\nConducted programming event like Pair-A-thon a pair programming competition.",
+    "char_start": 2040,
+    "char_end": 2405,
+    "meta": {
+      "candidate_id": "a99c326a282a4720",
+      "chunk_id": "a99c326a:06",
+      "section_type": "leadership",
+      "chunker_version": "v1",
+      "embed_model": "sentence-transformers/all-mpnet-base-v2"
+    }
+  },
+  {
+    "chunk_id": "a99c326a:07",
+    "candidate_id": "a99c326a282a4720",
+    "raw_text": "Solved 400+ problems across platforms such as Codeforces (Max Rating: 1327), CodeChef (Max Rating: 1634), and \u2022\nLeetCode (Max Rating: 1,651).",
+    "char_start": 2424,
+    "char_end": 2565,
+    "meta": {
+      "candidate_id": "a99c326a282a4720",
+      "chunk_id": "a99c326a:07",
+      "section_type": "extracurricular",
+      "chunker_version": "v1",
+      "embed_model": "sentence-transformers/all-mpnet-base-v2"
+    }
+  }
+]

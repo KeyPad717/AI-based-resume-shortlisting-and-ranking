@@ -1,0 +1,100 @@
+[
+  {
+    "chunk_id": "1302e955:00",
+    "candidate_id": "1302e955e5eaa5b6",
+    "raw_text": "KARTAVYA PATEL\nInternational Institute of Information Technology, Bangalore \u2014 CSE\n(cid:131) # (cid:239) +91 8799694947 Kartavyakumar.Patel@iiitb.ac.in linkedin.com/in/kartvaya\n\u00a7 github.com/kp-0705",
+    "char_start": 0,
+    "char_end": 196,
+    "meta": {
+      "candidate_id": "1302e955e5eaa5b6",
+      "chunk_id": "1302e955:00",
+      "section_type": "other",
+      "chunker_version": "v1",
+      "embed_model": "sentence-transformers/all-mpnet-base-v2"
+    }
+  },
+  {
+    "chunk_id": "1302e955:01",
+    "candidate_id": "1302e955e5eaa5b6",
+    "raw_text": "International Institute of Information Technology, Bangalore July 2025 \u2014 May 2027\nM.Tech in Computer Science and Engineering CGPA: 3.38 / 4.00\nBirla Vishvakarma Mahavidyalaya (BVM) Sep 2021 \u2014 May 2025\nB.Tech in Computer Engineering CGPA: 7.81 / 10.00",
+    "char_start": 207,
+    "char_end": 457,
+    "meta": {
+      "candidate_id": "1302e955e5eaa5b6",
+      "chunk_id": "1302e955:01",
+      "section_type": "education",
+      "chunker_version": "v1",
+      "embed_model": "sentence-transformers/all-mpnet-base-v2"
+    }
+  },
+  {
+    "chunk_id": "1302e955:02",
+    "candidate_id": "1302e955e5eaa5b6",
+    "raw_text": "Bank Management System \u2014 C\n\u2013 banking system supporting account creation, deposits, withdrawals, and balance inquiries.\n\u2013 Implemented file handling for persistent storage of customer records and transaction data.\n\u2013 Designed modular functions to ensure structured logic and maintainability.\nChunked P2P File Sharing System \u2014 C++, Socket Programming\n\u2013 Developed a tracker-based peer-to-peer file sharing system enabling direct chunk transfer between peers.\n\u2013 multithreaded upload/download handling with SHA-based chunk verification to ensure data integrity.\n\u2013 Designed efficient metadata management for peer discovery and accurate file reconstruction.\nAlumni Registration Portal \u2014 Web App (Full Stack)\n\u2013 secure signup/login functionality using Spring Boot, JWT authentication, and BCrypt password hashing.",
+    "char_start": 490,
+    "char_end": 1292,
+    "meta": {
+      "candidate_id": "1302e955e5eaa5b6",
+      "chunk_id": "1302e955:02",
+      "section_type": "projects",
+      "chunker_version": "v1",
+      "embed_model": "sentence-transformers/all-mpnet-base-v2"
+    }
+  },
+  {
+    "chunk_id": "1302e955:03",
+    "candidate_id": "1302e955e5eaa5b6",
+    "raw_text": "\u2013 Designed RESTful APIs for profile search and alumni data management with MySQL integration.\n\u2013 Implemented role-based access control using Spring Security for secure authorization.\nTick Now \u2014 Flutter Mobile Application\n\u2013 Built a scalable cross-platform event management app using Flutter and Firebase.\n\u2013 Integrated real-time database, authentication, and digital ticket booking features.\n\u2013 Streamlined event registration workflows, reducing manual processing and improving user experience.",
+    "char_start": 1293,
+    "char_end": 1783,
+    "meta": {
+      "candidate_id": "1302e955e5eaa5b6",
+      "chunk_id": "1302e955:03",
+      "section_type": "projects",
+      "chunker_version": "v1",
+      "embed_model": "sentence-transformers/all-mpnet-base-v2"
+    }
+  },
+  {
+    "chunk_id": "1302e955:04",
+    "candidate_id": "1302e955e5eaa5b6",
+    "raw_text": "Languages: C++, C\n\u2022 Web / Backend: Spring Boot, REST APIs, MySQL, JWT\n\u2022 Mobile: Flutter\n\u2022 Tools: Linux, Git, Jenkins",
+    "char_start": 1803,
+    "char_end": 1919,
+    "meta": {
+      "candidate_id": "1302e955e5eaa5b6",
+      "chunk_id": "1302e955:04",
+      "section_type": "skills",
+      "chunker_version": "v1",
+      "embed_model": "sentence-transformers/all-mpnet-base-v2"
+    }
+  },
+  {
+    "chunk_id": "1302e955:05",
+    "candidate_id": "1302e955e5eaa5b6",
+    "raw_text": "Data Structures & Algorithms, Problem Solving",
+    "char_start": 1933,
+    "char_end": 1978,
+    "meta": {
+      "candidate_id": "1302e955e5eaa5b6",
+      "chunk_id": "1302e955:05",
+      "section_type": "coursework",
+      "chunker_version": "v1",
+      "embed_model": "sentence-transformers/all-mpnet-base-v2"
+    }
+  },
+  {
+    "chunk_id": "1302e955:06",
+    "candidate_id": "1302e955e5eaa5b6",
+    "raw_text": "IIT Madras \u2014 BSc in Programming & Data Science (Foundation Level) \u2014 Completed\n\u2022 GATE CSE 2025 \u2014 Score: 648, AIR: 2098\n\u2022 Received SSIP funding for developing a gesture-based system using NVIDIA Jetson Nano (Gesture Pilot).",
+    "char_start": 1994,
+    "char_end": 2215,
+    "meta": {
+      "candidate_id": "1302e955e5eaa5b6",
+      "chunk_id": "1302e955:06",
+      "section_type": "achievements",
+      "chunker_version": "v1",
+      "embed_model": "sentence-transformers/all-mpnet-base-v2"
+    }
+  }
+]

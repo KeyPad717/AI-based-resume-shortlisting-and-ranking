@@ -1,0 +1,114 @@
+[
+  {
+    "chunk_id": "b321e394:00",
+    "candidate_id": "b321e394254ceb98",
+    "raw_text": "Gaurav Rajpurohit\nInternational Institute of Information Technology, Bangalore\n(cid:131) 9313524212 Gaurav.Rajpurohit@iiitb.ac.in linkedin.com/in/gaurav-rajpurohit github.com/Gaurav-Rajpurohit # (cid:239) \u00a7",
+    "char_start": 0,
+    "char_end": 206,
+    "meta": {
+      "candidate_id": "b321e394254ceb98",
+      "chunk_id": "b321e394:00",
+      "section_type": "other",
+      "chunker_version": "v1",
+      "embed_model": "sentence-transformers/all-mpnet-base-v2"
+    }
+  },
+  {
+    "chunk_id": "b321e394:01",
+    "candidate_id": "b321e394254ceb98",
+    "raw_text": "International Institute of Information Technology Bangalore July 2025 \u2013 July 27\nMaster of Technology in Computer Science 3.13/4\nLovely Professional University, Jalandhar Sep. 2021 \u2013 May 2025\nBachelor of Technology in Computer Science 3.38/4",
+    "char_start": 217,
+    "char_end": 457,
+    "meta": {
+      "candidate_id": "b321e394254ceb98",
+      "chunk_id": "b321e394:01",
+      "section_type": "education",
+      "chunker_version": "v1",
+      "embed_model": "sentence-transformers/all-mpnet-base-v2"
+    }
+  },
+  {
+    "chunk_id": "b321e394:02",
+    "candidate_id": "b321e394254ceb98",
+    "raw_text": "Banking Management System (Socket-based) | C, Socket Programming, Pthreads, File Systems Oct 2025\nDesigned and implemented a multi-client banking system using C and TCP sockets with a centralized server and \u2022\ninteractive clients.\nSupported role-based access control for Customer, Employee, Manager, and Admin with distinct operations and \u2022\npermissions.\nImplemented concurrent client handling using POSIX threads and ensured data consistency with advisory file locking \u2022\n(flock).\nBuilt session management to enforce single active login per user and prevent concurrent session conflicts. \u2022\nMaintained persistent storage using structured text files for customers, employees, transactions, loans, and feedback. \u2022\nLogged all financial transactions with timestamps and implemented core banking operations such as deposit, withdrawal,",
+    "char_start": 467,
+    "char_end": 1294,
+    "meta": {
+      "candidate_id": "b321e394254ceb98",
+      "chunk_id": "b321e394:02",
+      "section_type": "projects",
+      "chunker_version": "v1",
+      "embed_model": "sentence-transformers/all-mpnet-base-v2"
+    }
+  },
+  {
+    "chunk_id": "b321e394:03",
+    "candidate_id": "b321e394254ceb98",
+    "raw_text": "and fund transfer.\nSmoking Status Classification | Python, Scikit-learn, SVM, Neural Networks Nov 2025\nBuilt a supervised machine learning model to predict smoking status using health-related features. \u2022\nApplied Logistic Regression, SVM (RBF), and MLP Neural Networks for binary classification. \u2022\nTuned hyperparameters using Optuna to maximize cross-validation accuracy. \u2022\nEvaluated models using confusion matrix, precision, recall, and F1-score to handle class imbalance. \u2022\nAcademia Course Management System | Spring Boot, React, MySQL, JWT, JPA Nov 2025\nDeveloped a full-stack academic course management system using Spring Boot backend and React frontend. \u2022\nImplemented secure authentication and authorization using Spring Security with JWT-based access control. \u2022\nDesigned RESTful APIs for course browsing, enrollment, and prerequisite validation using Spring Data JPA and",
+    "char_start": 1297,
+    "char_end": 2173,
+    "meta": {
+      "candidate_id": "b321e394254ceb98",
+      "chunk_id": "b321e394:03",
+      "section_type": "projects",
+      "chunker_version": "v1",
+      "embed_model": "sentence-transformers/all-mpnet-base-v2"
+    }
+  },
+  {
+    "chunk_id": "b321e394:04",
+    "candidate_id": "b321e394254ceb98",
+    "raw_text": "Hibernate.\nIntegrated MySQL for persistent storage of courses, students, enrollments, and grades with proper entity relationships. \u2022\nBuilt a responsive React UI with role-based views, client-side routing, and API integration using Axios. \u2022\nDocumented APIs using SpringDoc OpenAPI (Swagger) and ensured clean layered architecture with DTOs and \u2022\nMapStruct.",
+    "char_start": 2176,
+    "char_end": 2531,
+    "meta": {
+      "candidate_id": "b321e394254ceb98",
+      "chunk_id": "b321e394:04",
+      "section_type": "projects",
+      "chunker_version": "v1",
+      "embed_model": "sentence-transformers/all-mpnet-base-v2"
+    }
+  },
+  {
+    "chunk_id": "b321e394:05",
+    "candidate_id": "b321e394254ceb98",
+    "raw_text": "Languages: C, C++, Python, Java, JavaScript\nBackend & Systems: Spring Boot, Spring Security, REST APIs, Socket Programming, Pthreads\nML / AI: Scikit-learn, SVM, MLP Neural Networks, Optuna\nFrontend: React, HTML, CSS\nDatabases: MySQL, MongoDB\nCS Fundamentals: Data Structures, Algorithms, Computer Networks, Operating Systems",
+    "char_start": 2549,
+    "char_end": 2873,
+    "meta": {
+      "candidate_id": "b321e394254ceb98",
+      "chunk_id": "b321e394:05",
+      "section_type": "skills",
+      "chunker_version": "v1",
+      "embed_model": "sentence-transformers/all-mpnet-base-v2"
+    }
+  },
+  {
+    "chunk_id": "b321e394:06",
+    "candidate_id": "b321e394254ceb98",
+    "raw_text": "Data Structures Database Management Computer Networks Front-End Framework \u2022 \u2022 \u2022 \u2022\nAlgorithms Analysis Web Technologies Theory of Computation",
+    "char_start": 2894,
+    "char_end": 3034,
+    "meta": {
+      "candidate_id": "b321e394254ceb98",
+      "chunk_id": "b321e394:06",
+      "section_type": "coursework",
+      "chunker_version": "v1",
+      "embed_model": "sentence-transformers/all-mpnet-base-v2"
+    }
+  },
+  {
+    "chunk_id": "b321e394:07",
+    "candidate_id": "b321e394254ceb98",
+    "raw_text": "Secured AIR 1374 in GATE CSE 2025 with a 99.9 percentile. \u2022\nGot A grade in skill development course named \u201dThe English Conversa: A course on enunciating speaking skill\u201d by CPE \u2022\nat LPU",
+    "char_start": 3053,
+    "char_end": 3237,
+    "meta": {
+      "candidate_id": "b321e394254ceb98",
+      "chunk_id": "b321e394:07",
+      "section_type": "achievements",
+      "chunker_version": "v1",
+      "embed_model": "sentence-transformers/all-mpnet-base-v2"
+    }
+  }
+]

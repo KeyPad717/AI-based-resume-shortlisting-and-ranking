@@ -1,0 +1,128 @@
+[
+  {
+    "chunk_id": "dff72019:00",
+    "candidate_id": "dff72019040e44ab",
+    "raw_text": "Mayank Satapara\nSurendranagar, Gujarat\n+91 9099943601 mjsatapara@gmail.com LinkedIn GitHub LeetCode (cid:131) (cid:239) # \u00a7 \u2014",
+    "char_start": 0,
+    "char_end": 125,
+    "meta": {
+      "candidate_id": "dff72019040e44ab",
+      "chunk_id": "dff72019:00",
+      "section_type": "other",
+      "chunker_version": "v1",
+      "embed_model": "sentence-transformers/all-mpnet-base-v2"
+    }
+  },
+  {
+    "chunk_id": "dff72019:01",
+    "candidate_id": "dff72019040e44ab",
+    "raw_text": "International Institute of Information Technology, Bangalore July 2025 - July 2027\nMaster of Technology in Computer Science Engineering CGPA of 3.96/4\nIndian Institute of Information Technology, Surat Oct 2020 - Aug 2024\nBachelor of Technology in Electronics and Communication Engineering CGPA of 3.5/4",
+    "char_start": 136,
+    "char_end": 438,
+    "meta": {
+      "candidate_id": "dff72019040e44ab",
+      "chunk_id": "dff72019:01",
+      "section_type": "education",
+      "chunker_version": "v1",
+      "embed_model": "sentence-transformers/all-mpnet-base-v2"
+    }
+  },
+  {
+    "chunk_id": "dff72019:02",
+    "candidate_id": "dff72019040e44ab",
+    "raw_text": "\u00a7 Smoker Status & Forest Cover Type Classification | Python | Github Link December 2025\nDeveloped supervised machine learning models for multi-class forest cover classification and binary smoker prediction. \u2022\nPerformed extensive data preprocessing, feature engineering, and normalization to improve model training stability. \u2022\nImplemented and compared SVM, MLP, K-Means, Gaussian models, and Logistic Regression to evaluate \u2022\nperformance. and applied cross-validation and hyperparameter tuning to improve performance.\nAchieved 88.6% accuracy in forest cover classification and 75% accuracy in smoker prediction. \u2022\n\u00a7 ERP Academic Portal | Spring Boot, React, OAuth2, JWT | Github Link November 2025\nDeveloped an academic portal using Spring Boot backend and React frontend to automate academic work. \u2022\nImplemented secure authentication using OAuth2 for Google",
+    "char_start": 448,
+    "char_end": 1306,
+    "meta": {
+      "candidate_id": "dff72019040e44ab",
+      "chunk_id": "dff72019:02",
+      "section_type": "projects",
+      "chunker_version": "v1",
+      "embed_model": "sentence-transformers/all-mpnet-base-v2"
+    }
+  },
+  {
+    "chunk_id": "dff72019:03",
+    "candidate_id": "dff72019040e44ab",
+    "raw_text": "Sign-In along with JWT-based authorization.",
+    "char_start": 1307,
+    "char_end": 1350,
+    "meta": {
+      "candidate_id": "dff72019040e44ab",
+      "chunk_id": "dff72019:03",
+      "section_type": "projects",
+      "chunker_version": "v1",
+      "embed_model": "sentence-transformers/all-mpnet-base-v2"
+    }
+  },
+  {
+    "chunk_id": "dff72019:04",
+    "candidate_id": "dff72019040e44ab",
+    "raw_text": "Built a Role-based access control system supporting Admin and User functionalities. \u2022\nDeveloped RESTful APIs for academic management, including modules for departments, employees, and admin user. \u2022\nConfigured CORS policies and integrated Swagger UI for secure communication and automated API documentation. \u2022\n\u00a7 Obesity Level Classification | Python, XGBoost, Optuna | Github Link October 2025\nDeveloped a multi-class obesity prediction model using lifestyle attributes with preprocessing and feature \u2022\nengineering.\nPerformed exploratory data analysis to identify factors affecting obesity classification. \u2022\nImplemented Decision Tree, AdaBoost, and Random Forest using GridSearchCV and built an XGBoost \u2022\nclassifier with Optuna-based hyperparameter tuning and cross-validation.\nAchieved 91.23% accuracy, outperforming baseline machine learning models in classification performance.",
+    "char_start": 1353,
+    "char_end": 2233,
+    "meta": {
+      "candidate_id": "dff72019040e44ab",
+      "chunk_id": "dff72019:04",
+      "section_type": "projects",
+      "chunker_version": "v1",
+      "embed_model": "sentence-transformers/all-mpnet-base-v2"
+    }
+  },
+  {
+    "chunk_id": "dff72019:05",
+    "candidate_id": "dff72019040e44ab",
+    "raw_text": "\u00a7 Bank Management System | C, Linux, TCP Sockets | Github Link September 2025\nDeveloped a multi-user banking system using TCP socket-based client-server architecture on Linux. \u2022\nImplemented role-based access control supporting Admin, Manager, Employee, and Customer banking operations. \u2022\nEnsured concurrency safety using fcntl-based file locking mechanisms. \u2022\nDesigned persistent storage using binary file handling with auto-incremented account and transaction identifiers.",
+    "char_start": 2236,
+    "char_end": 2709,
+    "meta": {
+      "candidate_id": "dff72019040e44ab",
+      "chunk_id": "dff72019:05",
+      "section_type": "projects",
+      "chunker_version": "v1",
+      "embed_model": "sentence-transformers/all-mpnet-base-v2"
+    }
+  },
+  {
+    "chunk_id": "dff72019:06",
+    "candidate_id": "dff72019040e44ab",
+    "raw_text": "Eleics Design Pvt. Ltd., Gandhinagar Jan 2024 \u2013 Aug 2024\nFull Stack Developer Intern\nCreated a production-quality Remote Data Monitoring & Notification System using Python (Flask). \u2022\nDeveloped and implemented SNS Scheduler and SNS Agent services for the purpose of automating report generation \u2022\nusing APScheduler, REST APIs, and secure hash-based authentication.\nImplemented automated pipelines for report generation using Openpyxl tool for daily, monthly, and OEE-based reports \u2022\nwith email delivery through SMTP.\nCreated interactive UIs to handle scheduling, OEE dashboards with real-time updates using WebSockets. \u2022\nIntegrated PostgreSQL for persistent data storage, implemented logging for the API to ensure reliability.",
+    "char_start": 2728,
+    "char_end": 3453,
+    "meta": {
+      "candidate_id": "dff72019040e44ab",
+      "chunk_id": "dff72019:06",
+      "section_type": "experience",
+      "chunker_version": "v1",
+      "embed_model": "sentence-transformers/all-mpnet-base-v2"
+    }
+  },
+  {
+    "chunk_id": "dff72019:07",
+    "candidate_id": "dff72019040e44ab",
+    "raw_text": "Languages: C, C++, Java, JavaScript, Python, SQL\nFrameworks: Spring Boot, Flask, Node.js, Express.js, React.js, REST APIs\nDevOps & Cloud: Docker, Kubernetes, Jenkins, GitHub Actions, CI/CD, Ansible\nDatabases & Tools: MySQL, PostgreSQL, MongoDB, Git, GitHub, Linux",
+    "char_start": 3473,
+    "char_end": 3736,
+    "meta": {
+      "candidate_id": "dff72019040e44ab",
+      "chunk_id": "dff72019:07",
+      "section_type": "skills",
+      "chunker_version": "v1",
+      "embed_model": "sentence-transformers/all-mpnet-base-v2"
+    }
+  },
+  {
+    "chunk_id": "dff72019:08",
+    "candidate_id": "dff72019040e44ab",
+    "raw_text": "Data Structures & Algorithms \u2022 Database management \u2022 Software Development \u2022 Software Systems\n\u2022 Natural Language Processing \u2022 Machine Learning \u2022 Deep Learning \u2022 Computer Vision",
+    "char_start": 3759,
+    "char_end": 3934,
+    "meta": {
+      "candidate_id": "dff72019040e44ab",
+      "chunk_id": "dff72019:08",
+      "section_type": "coursework",
+      "chunker_version": "v1",
+      "embed_model": "sentence-transformers/all-mpnet-base-v2"
+    }
+  }
+]

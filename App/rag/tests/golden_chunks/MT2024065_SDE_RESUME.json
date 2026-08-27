@@ -1,0 +1,114 @@
+[
+  {
+    "chunk_id": "7abda333:00",
+    "candidate_id": "7abda333191c0d00",
+    "raw_text": "Jainish Parmar\nInternational Institute of Information Technology, Bangalore\n(cid:131) +91-6356995938 Jainishkumar.Parmar@iiitb.ac.in linkedin.com/in/jainishparmar30 github.com/jainishParmar # (cid:239) \u00a7",
+    "char_start": 0,
+    "char_end": 203,
+    "meta": {
+      "candidate_id": "7abda333191c0d00",
+      "chunk_id": "7abda333:00",
+      "section_type": "other",
+      "chunker_version": "v1",
+      "embed_model": "sentence-transformers/all-mpnet-base-v2"
+    }
+  },
+  {
+    "chunk_id": "7abda333:01",
+    "candidate_id": "7abda333191c0d00",
+    "raw_text": "International Institute of Information Technology, Bangalore July 2024 \u2013 Present\nMaster of Technology in Computer Science & Engineering CGPA: 3.2/4\nBirla Vishvakarma Mahavidyalaya Engineering College July 2020 \u2013 May 2024\nBachelor of Technology in Computer Science CGPA: 3.34/4",
+    "char_start": 214,
+    "char_end": 490,
+    "meta": {
+      "candidate_id": "7abda333191c0d00",
+      "chunk_id": "7abda333:01",
+      "section_type": "education",
+      "chunker_version": "v1",
+      "embed_model": "sentence-transformers/all-mpnet-base-v2"
+    }
+  },
+  {
+    "chunk_id": "7abda333:02",
+    "candidate_id": "7abda333191c0d00",
+    "raw_text": "MediaTek August 2025 \u2013 Present\nSystem Software Engineer Intern \u2013 Automotive Department Bengaluru, Karnataka\nDeveloping and optimizing camera device drivers in the Automotive department as part of a 12-member collaborative \u2022\nengineering team.\nBuilding expertise in Linux kernel programming, operating system fundamentals, and hardware\u2013software integration. \u2022\nDebugging and analyzing kernel logs to accelerate development and improve system performance.",
+    "char_start": 507,
+    "char_end": 958,
+    "meta": {
+      "candidate_id": "7abda333191c0d00",
+      "chunk_id": "7abda333:02",
+      "section_type": "experience",
+      "chunker_version": "v1",
+      "embed_model": "sentence-transformers/all-mpnet-base-v2"
+    }
+  },
+  {
+    "chunk_id": "7abda333:03",
+    "candidate_id": "7abda333191c0d00",
+    "raw_text": "HostelHub | React.js, Spring Boot, Apache Kafka, Microservices, DevOps | January 2025 \u2013 May 2025 \u00a7\nDeveloped HostelHub, a microservices-based hostel management system enabling real-time room allocation/deallocation \u2022\nwith email notifications using Apache Kafka for asynchronous communication.\nArchitectedandcontainerized4+microserviceswithDocker, implementedCI/CDpipelineusingJenkins, anddeployedto \u2022\na Kubernetes (K8s) cluster.\nIntegrated monitoring with Prometheus and Grafana for system health and performance tracking across services. \u2022\nHeterogeneous DB Sync Engine | MySQL, MongoDB, Hive, Python | January 2025 \u2013 March 2025 \u00a7\nDevelopedadatasynchronizationsystemintegrating3databases: MySQL,MongoDB,andHive,ensuring100%consistency \u2022\nacross 5,000+ student grade records.\nMaintainedandprocessedoperationlogs(Oplogs)foreachdatabasetotrackchangesandapplyincrementalupdatesduring \u2022\nsynchronization.\nAppliedindexingstrategiesforqueryoptimization, ensuringefficientdatamergingandretrievalacrossallthreedatabases. \u2022\nE-BookTailor | React.js, Spring Boot, Keycloak, AWS, Cloudinary, XML | August 2024 \u2013 December 2024 \u00a7\nDesigned and implemented a publisher-consumer E-Book platform with support for publishing, chunking, and enabling",
+    "char_start": 970,
+    "char_end": 2196,
+    "meta": {
+      "candidate_id": "7abda333191c0d00",
+      "chunk_id": "7abda333:03",
+      "section_type": "projects",
+      "chunker_version": "v1",
+      "embed_model": "sentence-transformers/all-mpnet-base-v2"
+    }
+  },
+  {
+    "chunk_id": "7abda333:04",
+    "candidate_id": "7abda333191c0d00",
+    "raw_text": "the creation of custom books by merging chunks from multiple sources.\nBuiltaresponsivefront-endusingReact.jsandRedux,anddevelopedandintegrated15+RESTfulAPIswithSpringBoot \u2022\nto support user roles, book management, and an analytical dashboard.\nIntegrated Keycloak APIs for secure authentication, AWS S3 for PDF storage (supporting up to 5GB of storage), and \u2022\nPostgreSQL for handling records.",
+    "char_start": 2199,
+    "char_end": 2589,
+    "meta": {
+      "candidate_id": "7abda333191c0d00",
+      "chunk_id": "7abda333:04",
+      "section_type": "projects",
+      "chunker_version": "v1",
+      "embed_model": "sentence-transformers/all-mpnet-base-v2"
+    }
+  },
+  {
+    "chunk_id": "7abda333:05",
+    "candidate_id": "7abda333191c0d00",
+    "raw_text": "Languages: C, C++, SQL, HTML, CSS, JavaScript\nFrameworks/Technologies: React.js, Node.js, SpringBoot, Linux, Docker, Kubernetes, Jenkins, ArgoCD, Git/GitHub, AWS\nDatabases: MySQL, PostgreSQL, MongoDB, Redis, Hive\nPlatforms: Visual Studio Code, IntelliJ IDEA, Postman, Keycloak\nSoft Skills: Leadership & Decision-Making, Troubleshooting, Agile methodologies",
+    "char_start": 2605,
+    "char_end": 2961,
+    "meta": {
+      "candidate_id": "7abda333191c0d00",
+      "chunk_id": "7abda333:05",
+      "section_type": "skills",
+      "chunker_version": "v1",
+      "embed_model": "sentence-transformers/all-mpnet-base-v2"
+    }
+  },
+  {
+    "chunk_id": "7abda333:06",
+    "candidate_id": "7abda333191c0d00",
+    "raw_text": "Data Structures Data Modeling System Software Operating System \u2022 \u2022 \u2022 \u2022\nAlgorithm Analysis NoSQL Systems DevOps/GitOps Machine Learning",
+    "char_start": 2982,
+    "char_end": 3116,
+    "meta": {
+      "candidate_id": "7abda333191c0d00",
+      "chunk_id": "7abda333:06",
+      "section_type": "coursework",
+      "chunker_version": "v1",
+      "embed_model": "sentence-transformers/all-mpnet-base-v2"
+    }
+  },
+  {
+    "chunk_id": "7abda333:07",
+    "candidate_id": "7abda333191c0d00",
+    "raw_text": "Successfully completed the System Design Course offered by GeeksforGeeks. Link \u2022\n1st Secured place in the MOSIP Deployment Competition among 8+ teams. Link \u2022\nSolved 800+ coding problems across different platforms. LeetCode, GFG \u2022\nRanked 2,775 in GATE (Top 2% among 125,000 candidates).",
+    "char_start": 3153,
+    "char_end": 3438,
+    "meta": {
+      "candidate_id": "7abda333191c0d00",
+      "chunk_id": "7abda333:07",
+      "section_type": "certificates",
+      "chunker_version": "v1",
+      "embed_model": "sentence-transformers/all-mpnet-base-v2"
+    }
+  }
+]
