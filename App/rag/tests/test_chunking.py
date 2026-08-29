@@ -4,7 +4,13 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 
-from rag.chunking import ResumeChunker, prefix_context
+from rag.chunking import (
+    _is_bullet_marker,
+    _split_ranges_full,
+    detect_sections,
+    ResumeChunker,
+    prefix_context,
+)
 from rag.ingest import ResumeIngestor
 
 TESTS_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -95,8 +101,60 @@ def test_prefix_context():
     print("PREFIX_CONTEXT OK: section-only, section+org, section+org+dates, section+dates")
 
 
+def test_date_range_vs_numbered_bullet():
+    path = os.path.join(TESTS_DIR, "fixtures", "fixture_date_range_bullets.pdf")
+    chunker = ResumeChunker()
+    words = chunker._extract_words(path)
+    full_text, offsets, ends = chunker._build_full_text(words)
+    sections = detect_sections(words)
+    line_first = chunker._line_first_word_indices(words)
+
+    projects = [sec for sec in sections if sec[0] == "projects"]
+    assert len(projects) == 1, "expected a single projects section"
+    label, s, e = projects[0]
+    region_text = full_text[offsets[s]:ends[e - 1]]
+    base = offsets[s]
+
+    bullet_starts = [
+        offsets[i] - base
+        for i in range(s, e)
+        if i in line_first and _is_bullet_marker(words[i]["text"])
+    ]
+    ranges = _split_ranges_full(region_text, base, bullet_starts)
+    assert len(ranges) == 3, "expected exactly 3 numbered-bullet parts, got %d" % len(ranges)
+
+    parts_texts = [full_text[a:b] for a, b in ranges]
+    assert "Jan 2023 - Mar 2024" in parts_texts[0], (
+        "mid-line date hyphen must survive intact inside part 1, got %r" % parts_texts[0]
+    )
+    assert "Jan 2023 - Mar 2024" not in parts_texts[1], (
+        "date hyphen must not leak into part 2: %r" % parts_texts[1]
+    )
+
+    chunks = chunker.chunk(path)
+    project_chunks = [ch for ch in chunks if ch.meta.section_type == "projects"]
+    assert project_chunks, "expected at least one projects chunk"
+    assert "Jan 2023 - Mar 2024" in project_chunks[0].raw_text, (
+        "date range must appear intact within a single chunk, got %r" % project_chunks[0].raw_text
+    )
+    print("DATE_RANGE_BULLET OK: 3 bullet parts; 'Jan 2023 - Mar 2024' intact inside part 1 and one chunk")
+
+
+def test_two_column_no_false_positive():
+    offenders = []
+    for fname, path in iter_resumes():
+        chunker = ResumeChunker()
+        chunker.chunk(path)
+        if chunker.layout_notes:
+            offenders.append((fname, chunker.layout_notes))
+    assert not offenders, "two-column false positives on real resumes: %r" % offenders
+    print("TWO_COLUMN_NO_FALSE_POSITIVE OK: layout_notes==[] for all 7 real resumes")
+
+
 if __name__ == "__main__":
     test_golden_files_match()
     test_coverage_and_invariants()
     test_prefix_context()
+    test_date_range_vs_numbered_bullet()
+    test_two_column_no_false_positive()
     print("ALL CHUNKING TESTS PASSED")

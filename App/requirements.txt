@@ -16,3 +16,4 @@ transformers==4.38.1
 python-dotenv
 pydantic==2.12.5
 pydantic-settings==2.15.0
+qdrant-client==1.19.0
