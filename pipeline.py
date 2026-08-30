@@ -323,6 +323,22 @@ def parse_jd_requirements(jd_text, jd_struct, user_weights=None):
 
     return {"required_skills": required_skills, "preferred_skills": preferred_skills, "experience_years": jd_struct["experience_years"], "education": jd_struct["education"], "weights": normalize_weights(weights)}
 
+def use_skill_normalizer(jd_text, all_skills, ontology_store, embedder, llm_client):
+    """Thin wrapper around SkillNormalizer.normalize() (Phase 5).
+
+    NOTE (deliberate deviation from the roadmap): this is NOT yet wired into
+    parse_jd_requirements. Phase 0's classify_requirement_type and this phase's
+    parse_jd_requirements are left completely unchanged and still live; the
+    switch to the ESCO-normalized path, and deciding how the two coexist, is left
+    to Phase 6 (which will also wire the new scoring path). Retiring Phase 0 now
+    would leave the app invoking a half-integrated component. This function only
+    makes SkillNormalizer available as a new, separate entry point.
+    """
+    from rag.ontology import SkillNormalizer  # lazy: keep pipeline import cheap
+
+    normalizer = SkillNormalizer(ontology_store, embedder, llm_client)
+    return normalizer.normalize(jd_text, all_skills)
+
 def semantic_skill_coverage(requirement_skills, candidate_skills):
     if not requirement_skills: return 1.0, [], []
     if not candidate_skills: return 0.0, [], requirement_skills
