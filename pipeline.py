@@ -179,7 +179,7 @@ def rule_based_fallback_extraction(text, is_jd=False):
                 
     return {
         "candidate_name": name,
-        "skills": list(set(found_skills)),
+        "skills": sorted(set(found_skills)),
         "experience": [{"role": "unspecified", "type": "full-time", "duration_years": years}] if years > 0 else [],
         "education": [],
         "projects": [],
@@ -339,6 +339,247 @@ def use_skill_normalizer(jd_text, all_skills, ontology_store, embedder, llm_clie
     normalizer = SkillNormalizer(ontology_store, embedder, llm_client)
     return normalizer.normalize(jd_text, all_skills)
 
+# ---------------------------------------------------------------------------
+# Phase 6: RAG-scored signals (wired only when RagSettings().rag_enabled).
+# The legacy weighted-sum path above stays the source of truth when RAG is off,
+# so final_score arithmetic is byte-identical to before. When RAG is on we
+# recompute exactly four signals (evidence, semantic, reranker, required_skills)
+# and leave experience/education/project untouched, then fall through to the
+# SAME weighted-sum combination for final_score.
+# ---------------------------------------------------------------------------
+
+# Grounded-evidence verdict -> numeric weight (see roadmap §Evidence weighting).
+_VERDICT_VALUE = {"demonstrated": 1.0, "claimed_only": 0.35, "absent": 0.0}
+
+# A preferred-tier requirement contributes 1/3 the weight of a required one.
+PREFERRED_TIER_WEIGHT_RATIO = 1.0 / 3.0
+
+# Provisional rescale of the Phase 4 RRF fused_rank (a tiny 1/(60+rank) value)
+# into a comparable magnitude for the "semantic" signal. Re-validated in Phase 9
+# against the gold set.
+def _rag_dense_scale():
+    from rag.config import RagSettings as _RS
+    return float(_RS().dense_top_k)
+
+# Because the gated required_skills signal now restates the same grounded
+# evidence/verdict information, we SHIFT weight out of it (0.32 -> 0.25) into
+# the verified evidence signal (0.13 -> 0.20). The combined 0.45 is unchanged,
+# so every other signal is left relatively untouched and the total stays 1.0.
+# This split is PROVISIONAL and must be re-tuned against the Phase 9 gold set.
+_RAG_BASE_WEIGHTS = {
+    "required_skills": 0.25,
+    "semantic": 0.16,
+    "reranker": 0.16,
+    "experience": 0.10,
+    "education": 0.06,
+    "projects": 0.07,
+    "evidence": 0.20,
+}
+
+# Module-level memo of candidate_ids already embedded+indexed in the current
+# process, so a repeated request for the same resume does not re-embed it.
+_rag_indexed_candidate_ids = set()
+
+# Lazy singleton for the Phase 6 RAG runtime (stores + embedder + reranker +
+# llm client). Built on first use so the rag_disabled path never pays the cost.
+_rag_runtime_cache = {}
+
+
+def get_rag_stores():
+    """Return the lazy-singleton RAG runtime: ontology_store, resume_store,
+    embedder, reranker, llm_client.
+
+    Constructs an InMemoryStore or QdrantStore based on the RAG_STORE env var
+    ("qdrant" selects QdrantStore; anything else is an in-memory store). Nothing
+    is built at module import time; the first call here pays the model/collection
+    setup cost (and only when the RAG path is actually used).
+    """
+    if _rag_runtime_cache:
+        return _rag_runtime_cache
+
+    from rag.config import RagSettings as _RS
+    from rag.store import InMemoryStore, QdrantStore
+    from rag.embedding import EmbeddingService
+    from rag.retrieval import CrossEncoderReranker
+
+    settings = _RS()
+    backend = os.environ.get("RAG_STORE", "inmemory").lower()
+    if backend == "qdrant":
+        vector_size = EmbeddingService.get_instance().get_dimension()
+        resume_store = QdrantStore(url=settings.qdrant_url, vector_size=vector_size)
+        ontology_store = QdrantStore(url=settings.qdrant_url, vector_size=vector_size)
+    else:
+        resume_store = InMemoryStore()
+        ontology_store = InMemoryStore()
+
+    _rag_runtime_cache.update({
+        "ontology_store": ontology_store,
+        "resume_store": resume_store,
+        "embedder": EmbeddingService.get_instance(),
+        "reranker": CrossEncoderReranker(),
+        "llm_client": client,
+    })
+    return _rag_runtime_cache
+
+
+def _ensure_indexed(r_path, resume_store, embedder):
+    """Ingest a resume file into chunks and index them ONCE per candidate.
+
+    Returns the candidate_id (a content hash of the resume's extracted text from
+    the Phase 2 chunker). On a successful ingest we embed+upsert only the first
+    time a candidate is seen this process; later calls skip re-embedding. A
+    genuinely failed extraction raises so the caller can fall back to legacy.
+    """
+    from rag.ingest import ResumeIngestor
+    from rag.index import ResumeIndexer
+
+    ingestor = ResumeIngestor()
+    chunks, report = ingestor.ingest(r_path)
+    candidate_id = report.candidate_id
+    if not candidate_id or not chunks:
+        raise RuntimeError("resume ingestion produced no indexable chunks")
+    if candidate_id not in _rag_indexed_candidate_ids:
+        ResumeIndexer(resume_store, embedder).index_chunks(chunks)
+        _rag_indexed_candidate_ids.add(candidate_id)
+    return candidate_id
+
+
+def _tier_weight(requirement):
+    return PREFERRED_TIER_WEIGHT_RATIO if requirement.tier == "preferred" else 1.0
+
+
+def _rag_weights(jd_text, jd_struct):
+    """Re-derived weights for the RAG path.
+
+    Mirrors parse_jd_requirements' dynamic adjustments (senior/lead bump, and the
+    experience=0 / education-missing redistributions) but starts from the Phase 6
+    re-split base (0.25 required_skills / 0.20 evidence) instead of the legacy
+    (0.32 / 0.13). Values are renormalized so the 7 signals still sum to 1.0.
+    """
+    weights = dict(_RAG_BASE_WEIGHTS)
+    if any(kw in jd_text.lower() for kw in ["senior", "lead", "years of experience"]):
+        weights["experience"] += 0.10
+        weights["semantic"] -= 0.10
+    if jd_struct["experience_years"] == 0:
+        weights["required_skills"] += weights["experience"] * 0.5
+        weights["projects"] += weights["experience"] * 0.5
+        weights["experience"] = 0.0
+    if not jd_struct["education"]:
+        weights["reranker"] += weights["education"] * 0.5
+        weights["semantic"] += weights["education"] * 0.5
+        weights["education"] = 0.0
+    return normalize_weights(weights)
+
+
+class _CachedEvidenceRetriever:
+    """EvidenceVerifier adapter that returns pre-retrieved spans per skill.
+
+    Phase 6 retrieves each requirement's spans ONCE (for the semantic/reranker
+    signals) and feeds the exact same spans into the EvidenceVerifier so we never
+    run a second retrieval pass. Forwarded alt_labels are ignored because they
+    already shaped the cached retrieval.
+    """
+
+    def __init__(self, spans_by_skill):
+        self._spans = spans_by_skill
+
+    def for_requirement(self, requirement, candidate_id, alt_labels=None):
+        return list(self._spans.get(requirement.skill_name, []))
+
+
+def score_candidate_rag(jd_text, resume_text, r_struct, jd_struct, r_path,
+                        ontology_store, resume_store, embedder, reranker, llm_client):
+    """Recompute the four RAG-grounded signals for one candidate.
+
+    Only evidence, semantic, reranker and required_skills are produced here;
+    experience/education/project are intentionally left in process_resumes so
+    they stay unchanged. Returns a dict with those four signals, the re-derived
+    RAG weights, matched/missing skills, and the per-skill verdicts.
+    """
+    from rag.retrieval import (
+        CrossEncoderReranker,
+        HybridRetriever,
+        RRFFuser,
+        SkillEvidenceRetriever,
+    )
+    from rag.ontology import SkillNormalizer
+    from rag.evidence import CitationValidator, EvidenceVerifier
+
+    candidate_id = _ensure_indexed(r_path, resume_store, embedder)
+
+    normalizer = SkillNormalizer(ontology_store, embedder, llm_client)
+    requirements = normalizer.normalize(jd_text, jd_struct["skills"])
+
+    if not isinstance(reranker, CrossEncoderReranker):
+        reranker = CrossEncoderReranker(model=reranker)
+
+    skill_retriever = SkillEvidenceRetriever(
+        HybridRetriever(resume_store, embedder, RRFFuser()), reranker
+    )
+
+    # Retrieve each requirement's spans once; keep them for the evidence verifier.
+    spans_by_skill = {}
+    semantic_parts, rerank_parts = [], []
+    for req in requirements:
+        alt = normalizer.alt_labels_for(req.skill_name)
+        spans = skill_retriever.for_requirement(req, candidate_id, alt_labels=alt)
+        spans_by_skill[req.skill_name] = spans
+        top = spans[:3]
+        if top:
+            semantic_parts.append(
+                float(np.mean([s.fused_rank for s in top])) * _rag_dense_scale()
+            )
+            rerank_parts.append(
+                float(np.mean([(s.cross_encoder_score or 0.0) for s in top]))
+            )
+        else:
+            semantic_parts.append(0.0)
+            rerank_parts.append(0.0)
+
+    semantic_score = float(np.mean(semantic_parts)) if semantic_parts else 0.0
+    rerank_score = float(np.mean(rerank_parts)) if rerank_parts else 0.0
+
+    verifier = EvidenceVerifier(
+        _CachedEvidenceRetriever(spans_by_skill),
+        llm_client,
+        CitationValidator(),
+        alt_labels_provider=normalizer.alt_labels_for,
+    )
+    candidate_evidence = verifier.verify(candidate_id, requirements)
+    by_name = {v.skill_name: v for v in candidate_evidence.verdicts}
+
+    # Evidence = tier-weighted verdict aggregation.
+    num_w, den_w = 0.0, 0.0
+    matched, missing = [], []
+    for req in requirements:
+        tw = _tier_weight(req)
+        verdict = by_name.get(req.skill_name).verdict if by_name.get(req.skill_name) else "absent"
+        num_w += tw * _VERDICT_VALUE[verdict]
+        den_w += tw
+        (matched if verdict != "absent" else missing).append(req.skill_name)
+    evidence_score = float(num_w / den_w) if den_w else 0.0
+
+    # required_skills = ontology-expanded coverage gated on verdict != absent.
+    gate_num = sum(
+        _tier_weight(req)
+        for req in requirements
+        if by_name.get(req.skill_name) and by_name[req.skill_name].verdict != "absent"
+    )
+    required_score = float(gate_num / den_w) if den_w else 0.0
+
+    return {
+        "required_skills": required_score,
+        "semantic": semantic_score,
+        "reranker": rerank_score,
+        "evidence": evidence_score,
+        "weights": _rag_weights(jd_text, jd_struct),
+        "matched": matched,
+        "missing": missing,
+        "candidate_id": candidate_id,
+        "verdicts": [v for v in candidate_evidence.verdicts],
+    }
+
+
 def semantic_skill_coverage(requirement_skills, candidate_skills):
     if not requirement_skills: return 1.0, [], []
     if not candidate_skills: return 0.0, [], requirement_skills
@@ -391,6 +632,13 @@ def process_resumes(jd_file_path, resume_file_paths, user_weights=None):
     jd_struct = validate_extracted_struct(call_llm_extraction(jd_text, is_jd=True), jd_text, is_jd=True)
     jd_reqs = parse_jd_requirements(jd_text, jd_struct, user_weights=user_weights)
 
+    # Phase 6: when enabled, the per-candidate scores below are recomputed via
+    # the RAG-grounded path (evidence/semantic/reranker/required_skills). When
+    # disabled (the default) the exact legacy weighted-sum path is used so the
+    # final scores remain byte-identical to pre-Phase-6 output.
+    from rag.config import RagSettings as _RS
+    rag_enabled = bool(_RS().rag_enabled)
+
     results = []
     for r_path in resume_file_paths:
         try:
@@ -404,22 +652,52 @@ def process_resumes(jd_file_path, resume_file_paths, user_weights=None):
             
             cand_name = r_struct["name"] if r_struct["name"] else filename_name
 
-            req_score, matched, missing = semantic_skill_coverage(jd_reqs["required_skills"], r_struct["skills"])
             exp_scr = experience_score(jd_reqs["experience_years"], r_struct["experience_years"])
             edu_scr = education_score(jd_reqs["education"], r_struct["education"], r_text)
             proj_scr = project_score(jd_text, r_struct["projects"], embedding_model)
-            sem_scr = compute_semantic_similarity(jd_text, r_text)
-            
-            # Optimized CrossEncoder Usage (Threshold-based)
-            # Only run expensive CrossEncoder if semantic similarity or req_score shows promise
-            if sem_scr > 0.35 or req_score > 0.4:
-                rerank_scr = compute_reranker_score(jd_text, r_text)
-            else:
-                rerank_scr = sem_scr * 0.6  # Give a scaled down score without doing expensive compute
-                
-            ev_scr = compute_evidence_score(matched, r_text, r_struct["projects"])
 
-            weights = jd_reqs["weights"]
+            # Phase 6 RAG path: recompute four signals. ANY failure falls back
+            # to the exact legacy path for THIS candidate only.
+            rag_ok = False
+            rag_out = None
+            if rag_enabled:
+                try:
+                    rt = get_rag_stores()
+                    rag_out = score_candidate_rag(
+                        jd_text, r_text, r_struct, jd_struct, r_path,
+                        rt["ontology_store"], rt["resume_store"],
+                        rt["embedder"], rt["reranker"], rt["llm_client"],
+                    )
+                    rag_ok = True
+                except Exception as e:
+                    print(f"RAG scoring failed for {cand_name}; falling back to legacy path. Error: {e}")
+
+            if rag_ok:
+                req_score = rag_out["required_skills"]
+                matched = rag_out["matched"]
+                missing = rag_out["missing"]
+                sem_scr = rag_out["semantic"]
+                rerank_scr = rag_out["reranker"]
+                ev_scr = rag_out["evidence"]
+                weights = rag_out["weights"]
+                scoring_version = "v1-rag"
+                skill_verdicts = rag_out["verdicts"]
+            else:
+                req_score, matched, missing = semantic_skill_coverage(jd_reqs["required_skills"], r_struct["skills"])
+                sem_scr = compute_semantic_similarity(jd_text, r_text)
+                
+                # Optimized CrossEncoder Usage (Threshold-based)
+                # Only run expensive CrossEncoder if semantic similarity or req_score shows promise
+                if sem_scr > 0.35 or req_score > 0.4:
+                    rerank_scr = compute_reranker_score(jd_text, r_text)
+                else:
+                    rerank_scr = sem_scr * 0.6  # Give a scaled down score without doing expensive compute
+                    
+                ev_scr = compute_evidence_score(matched, r_text, r_struct["projects"])
+                weights = jd_reqs["weights"]
+                scoring_version = "v1-legacy"
+                skill_verdicts = None
+
             final = sum([
                 weights.get('required_skills', 0) * req_score,
                 weights.get('semantic', 0) * sem_scr,
@@ -444,8 +722,19 @@ def process_resumes(jd_file_path, resume_file_paths, user_weights=None):
                 "semantic_summary": r_struct.get("semantic_summary", ""),
                 "experience_breakdown": r_struct.get("experience_breakdown", []),
                 "projects": r_struct.get("projects", []),
-                "education": r_struct.get("education", [])
+                "education": r_struct.get("education", []),
+                "scoring_version": scoring_version,
             }
+            if skill_verdicts is not None:
+                res["skill_verdicts"] = [
+                    {
+                        "skill_name": v.skill_name,
+                        "verdict": v.verdict,
+                        "cited_chunk_ids": v.cited_chunk_ids,
+                        "quote": v.quote,
+                    }
+                    for v in skill_verdicts
+                ]
             res["explanation"] = generate_explanation(res)
             results.append(res)
         except Exception as e:
