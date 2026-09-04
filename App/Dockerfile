@@ -22,8 +22,9 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Download spaCy model
 RUN pip install https://s3-us-west-2.amazonaws.com/ai2-s2-scispacy/releases/v0.5.4/en_core_sci_sm-0.5.4.tar.gz
 
-# Copy application code
-COPY app.py .
+# Copy application code (app.py imports pipeline, which imports the rag package)
+COPY app.py pipeline.py .
+COPY rag/ ./rag/
 
 # Create necessary directories
 RUN mkdir -p uploads resumes

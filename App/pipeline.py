@@ -488,13 +488,23 @@ class _CachedEvidenceRetriever:
 
 
 def score_candidate_rag(jd_text, resume_text, r_struct, jd_struct, r_path,
-                        ontology_store, resume_store, embedder, reranker, llm_client):
+                        ontology_store, resume_store, embedder, reranker, llm_client,
+                        requirements=None, candidate_id=None):
     """Recompute the four RAG-grounded signals for one candidate.
 
     Only evidence, semantic, reranker and required_skills are produced here;
     experience/education/project are intentionally left in process_resumes so
     they stay unchanged. Returns a dict with those four signals, the re-derived
     RAG weights, matched/missing skills, and the per-skill verdicts.
+
+    Phase 7 additive params (defaults preserve Phase 6 behavior exactly):
+      * ``requirements`` — a precomputed list[NormalizedRequirement]. When
+        provided, ``SkillNormalizer.normalize`` is skipped (the JD was already
+        normalized once, e.g. at job creation). When None, normalization runs
+        as before.
+      * ``candidate_id`` — a precomputed resume candidate_id. When provided,
+        ``_ensure_indexed`` is skipped (the resume was already indexed, e.g. via
+        the /resumes ingestion endpoint). When None, it is derived as before.
     """
     from rag.retrieval import (
         CrossEncoderReranker,
@@ -505,10 +515,12 @@ def score_candidate_rag(jd_text, resume_text, r_struct, jd_struct, r_path,
     from rag.ontology import SkillNormalizer
     from rag.evidence import CitationValidator, EvidenceVerifier
 
-    candidate_id = _ensure_indexed(r_path, resume_store, embedder)
+    if candidate_id is None:
+        candidate_id = _ensure_indexed(r_path, resume_store, embedder)
 
     normalizer = SkillNormalizer(ontology_store, embedder, llm_client)
-    requirements = normalizer.normalize(jd_text, jd_struct["skills"])
+    if requirements is None:
+        requirements = normalizer.normalize(jd_text, jd_struct["skills"])
 
     if not isinstance(reranker, CrossEncoderReranker):
         reranker = CrossEncoderReranker(model=reranker)
