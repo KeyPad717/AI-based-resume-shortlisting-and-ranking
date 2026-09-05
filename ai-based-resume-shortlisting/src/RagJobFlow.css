@@ -1,0 +1,115 @@
+.rag-flow {
+  width: 100%;
+  max-width: 100%;
+}
+
+.rag-status-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.rag-status-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  padding: 0.6rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.rag-status-filename {
+  font-weight: 500;
+  color: #e0e0e0;
+}
+
+.rag-status-error {
+  color: #ff6b6b;
+  font-size: 0.8rem;
+}
+
+.rag-results-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+
+.rag-results-header h2 {
+  margin: 0;
+  color: #fff;
+}
+
+.rag-job-id {
+  font-size: 0.75rem;
+  color: #9aa0a6;
+  font-family: var(--mono, ui-monospace, monospace);
+}
+
+.rag-conflict-hint {
+  margin-bottom: 1rem;
+}
+
+.rag-empty {
+  color: #9aa0a6;
+  padding: 1rem 0;
+}
+
+.rag-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.rag-card {
+  background: rgba(30, 30, 30, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 1rem;
+}
+
+.rag-card-top {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.5rem;
+}
+
+.rag-card-name {
+  color: #fff;
+}
+
+.rag-card-badge {
+  margin-left: auto;
+}
+
+.rag-card-summary {
+  color: #a0a0a0;
+  font-size: 0.85rem;
+  font-style: italic;
+  line-height: 1.5;
+  margin-bottom: 0.75rem;
+}
+
+.rag-chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.rag-score-high {
+  color: #51cf66;
+  font-weight: 700;
+}
+.rag-score-medium {
+  color: #ffd43b;
+  font-weight: 700;
+}
+.rag-score-low {
+  color: #ff6b6b;
+  font-weight: 700;
+}

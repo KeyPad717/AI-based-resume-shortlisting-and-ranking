@@ -1,7 +1,9 @@
 import { useState } from 'react'
 import './App.css'
+import RagJobFlow from './RagJobFlow.jsx'
 
 function App() {
+  const [view, setView] = useState('classic')
   const [jdFile, setJdFile] = useState(null)
   const [resumeFiles, setResumeFiles] = useState([])
   const [loading, setLoading] = useState(false)
@@ -130,8 +132,29 @@ function App() {
       <header className="header">
         <h1>AI-Based Resume Shortlisting</h1>
         <p>Advanced Industry-Level NLP Pipeline for Academic Recruitment</p>
+        <div className="view-toggle">
+          <button
+            type="button"
+            className={`view-toggle-btn${view === 'classic' ? ' active' : ''}`}
+            onClick={() => setView('classic')}
+          >
+            Classic Score
+          </button>
+          <button
+            type="button"
+            className={`view-toggle-btn${view === 'evidence' ? ' active' : ''}`}
+            onClick={() => setView('evidence')}
+          >
+            RAG Evidence
+          </button>
+        </div>
       </header>
 
+      {view === 'evidence' ? (
+        <main className="main">
+          <RagJobFlow />
+        </main>
+      ) : (
       <main className="main">
         {error && <div className="error-message">⚠️ {error}</div>}
         {success && <div className="success-message">✅ {success}</div>}
@@ -339,6 +362,7 @@ function App() {
         )}
 
       </main>
+      )}
     </div>
   )
 }

@@ -1,0 +1,58 @@
+.evidence-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.3rem 0.6rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(30, 30, 30, 0.9);
+}
+
+.evidence-chip.clickable {
+  cursor: pointer;
+}
+.evidence-chip.clickable:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.evidence-chip-skill {
+  color: #e0e0e0;
+}
+
+.evidence-chip-verdict {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+.verdict-demonstrated {
+  border-color: rgba(40, 167, 69, 0.4);
+}
+.verdict-demonstrated .evidence-chip-verdict {
+  color: #51cf66;
+}
+
+.verdict-claimed {
+  border-color: rgba(255, 193, 7, 0.4);
+}
+.verdict-claimed .evidence-chip-verdict {
+  color: #ffd43b;
+}
+
+.verdict-absent {
+  border-color: rgba(220, 53, 69, 0.4);
+}
+.verdict-absent .evidence-chip-verdict {
+  color: #ff6b6b;
+}
+
+.verdict-unknown {
+  border-color: rgba(108, 117, 125, 0.4);
+  border-style: dashed;
+}
+.verdict-unknown .evidence-chip-verdict {
+  color: #adb5bd;
+}

@@ -1,0 +1,111 @@
+.evidence-drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100vh;
+  width: min(480px, 100vw);
+  background: #23232b;
+  border-left: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: -8px 0 32px rgba(0, 0, 0, 0.4);
+  z-index: 1000;
+  padding: 1.25rem;
+  overflow-y: auto;
+  color: #e0e0e0;
+}
+
+.evidence-drawer-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.evidence-drawer-header h4 {
+  margin: 0;
+  color: #fff;
+}
+
+.evidence-drawer-close {
+  background: rgba(255, 255, 255, 0.08);
+  border: none;
+  color: #fff;
+  font-size: 1.2rem;
+  line-height: 1;
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.evidence-drawer-verdict {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.evidence-drawer-verdict-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  color: #9aa0a6;
+}
+
+.evidence-drawer-verdict-value {
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.evidence-drawer-verdict-note {
+  font-size: 0.7rem;
+  color: #9aa0a6;
+}
+
+.evidence-drawer-status {
+  color: #9aa0a6;
+  font-size: 0.85rem;
+}
+
+.evidence-drawer-error {
+  color: #ff6b6b;
+}
+
+.evidence-drawer-no-span {
+  padding: 0.75rem;
+  color: #ffc107;
+  background: rgba(255, 193, 7, 0.08);
+  border-radius: 6px;
+  font-size: 0.85rem;
+}
+
+.evidence-drawer-spans {
+  list-style: none;
+  padding: 0;
+  margin: 0.75rem 0 0;
+}
+
+.evidence-drawer-span {
+  padding: 0.6rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.evidence-drawer-span-text {
+  display: block;
+  color: #d0d0d0;
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+
+.evidence-drawer-span-meta {
+  display: block;
+  margin-top: 0.35rem;
+  font-size: 0.7rem;
+  color: #9aa0a6;
+}
+
+.evidence-drawer-span-rank {
+  margin-left: 0.6rem;
+  color: #c084fc;
+}

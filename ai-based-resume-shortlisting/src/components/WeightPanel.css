@@ -1,0 +1,74 @@
+.weight-panel {
+  margin-top: 1.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.weight-panel h4 {
+  color: #fff;
+  margin-bottom: 1rem;
+}
+
+.weight-panel-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+}
+
+.weight-panel-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.weight-panel-label {
+  font-size: 0.85rem;
+  color: #b0b0b0;
+  font-weight: 500;
+}
+
+.weight-panel-item input[type='range'] {
+  width: 100%;
+  accent-color: #28a745;
+  cursor: pointer;
+}
+
+.weight-panel-input {
+  width: 5rem;
+  padding: 0.4rem;
+  background: rgba(60, 60, 60, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 6px;
+  color: #fff;
+  font-weight: 600;
+}
+
+.weight-panel-total {
+  margin-top: 1rem;
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+  text-align: center;
+  font-weight: 600;
+}
+
+.weight-panel-total.valid {
+  background: rgba(40, 167, 69, 0.1);
+  color: #51cf66;
+  border: 1px solid rgba(40, 167, 69, 0.3);
+}
+
+.weight-panel-total.invalid {
+  background: rgba(220, 53, 69, 0.1);
+  color: #ff6b6b;
+  border: 1px solid rgba(220, 53, 69, 0.3);
+}
+
+.weight-panel-status {
+  margin-top: 0.75rem;
+  font-size: 0.85rem;
+  color: #9aa0a6;
+}
+
+.weight-panel-conflict {
+  color: #ffd43b;
+}

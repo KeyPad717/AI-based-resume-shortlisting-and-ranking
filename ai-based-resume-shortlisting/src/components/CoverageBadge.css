@@ -1,0 +1,49 @@
+.coverage-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  font-size: 0.7rem;
+  padding: 0.2rem 0.5rem;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.coverage-badge-status {
+  font-weight: 600;
+}
+
+.badge-done {
+  border-color: rgba(40, 167, 69, 0.4);
+}
+.badge-done .coverage-badge-status {
+  color: #51cf66;
+}
+
+.badge-error {
+  border-color: rgba(220, 53, 69, 0.4);
+}
+.badge-error .coverage-badge-status,
+.coverage-badge-error {
+  color: #ff6b6b;
+}
+
+.badge-pending {
+  border-color: rgba(255, 193, 7, 0.4);
+}
+.badge-pending .coverage-badge-status {
+  color: #ffd43b;
+}
+
+.coverage-badge-value {
+  color: #51cf66;
+}
+
+.coverage-badge-gap {
+  color: #9aa0a6;
+  font-style: italic;
+}
+
+.coverage-badge-warnings {
+  color: #ffd43b;
+}
