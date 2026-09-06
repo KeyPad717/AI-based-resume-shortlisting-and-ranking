@@ -1,0 +1,779 @@
+{
+  "evaluation_id": "run_eval_v1",
+  "date": "2026-09-06",
+  "environment": {
+    "openrouter_api_key": false,
+    "embedder": "sentence-transformers/all-mpnet-base-v2",
+    "cross_encoder": "cross-encoder/ms-marco-MiniLM-L-6-v2",
+    "esco": "No real ESCO dataset (ESCO_SKILLS_CSV unset) - using the SYNTHETIC 15-concept stand-in from scripts/build_esco_index.py. Ontology-expansion results are illustrative only and cannot generalize to the real taxonomy.",
+    "llm_additive": "OFF"
+  },
+  "skills": [
+    "c",
+    "c++",
+    "docker",
+    "go",
+    "java",
+    "javascript",
+    "kubernetes",
+    "linux",
+    "machine learning",
+    "python",
+    "typescript"
+  ],
+  "gold_rows_with_alias": 10,
+  "gold_rows_without_alias": 13,
+  "index_build_s": 11.477,
+  "retrieval_ablation": {
+    "dense_only": {
+      "recall@3": 0.6323529411764706,
+      "pairs": 68,
+      "hit": 43
+    },
+    "bm25_only": {
+      "recall@3": 0.6176470588235294,
+      "pairs": 68,
+      "hit": 42
+    },
+    "hybrid": {
+      "recall@3": 0.8088235294117647,
+      "pairs": 68,
+      "hit": 55
+    },
+    "hybrid_ce": {
+      "recall@3": 0.8823529411764706,
+      "pairs": 68,
+      "hit": 60
+    },
+    "hybrid_ce+ontology_expansion": {
+      "recall@3": 0.8823529411764706,
+      "pairs": 68,
+      "hit": 60
+    },
+    "hybrid_ce+header_prefix": {
+      "recall@3": null,
+      "gap": "hybrid_ce+header_prefix: prefix_context() is not wired into chunking/indexing (chunking.py reserves it for a later phase), so no chunk is embedded with a section header today; this row cannot be measured without changing the ingest path (out of scope for evaluation phase)."
+    }
+  },
+  "ablation_wall_s": 44.69,
+  "verdict_accuracy": {
+    "accuracy": 0.4161490683229814,
+    "correct": 67,
+    "total": 161,
+    "per_gold_verdict": {
+      "demonstrated": 0.16176470588235295,
+      "claimed_only": 0.02631578947368421,
+      "absent": 1.0
+    }
+  },
+  "false_missing_skill_rate": {
+    "false_missing_skill_rate": 0.8382352941176471,
+    "gold_demonstrated": 68,
+    "predicted_demonstrated": 11,
+    "missed": 57,
+    "by_candidate": {
+      "aditya_dave": [
+        61,
+        7
+      ],
+      "keyur_padiya": [
+        58,
+        10
+      ],
+      "mayank_satapara": [
+        59,
+        9
+      ],
+      "jainish_parmar": [
+        55,
+        13
+      ],
+      "gaurav_rajpurohit": [
+        61,
+        7
+      ],
+      "parva_parmar": [
+        64,
+        4
+      ],
+      "kartavya_patel": [
+        61,
+        7
+      ]
+    }
+  },
+  "system_skill_verdicts": {
+    "c": {
+      "jainish_parmar": "claimed_only",
+      "aditya_dave": "claimed_only",
+      "gaurav_rajpurohit": "demonstrated",
+      "kartavya_patel": "demonstrated",
+      "keyur_padiya": "claimed_only",
+      "mayank_satapara": "claimed_only",
+      "parva_parmar": "demonstrated"
+    },
+    "c++": {
+      "jainish_parmar": "demonstrated",
+      "aditya_dave": "demonstrated",
+      "gaurav_rajpurohit": "demonstrated",
+      "kartavya_patel": "demonstrated",
+      "keyur_padiya": "demonstrated",
+      "mayank_satapara": "demonstrated",
+      "parva_parmar": "demonstrated"
+    },
+    "docker": {
+      "jainish_parmar": "absent",
+      "aditya_dave": "absent",
+      "gaurav_rajpurohit": "absent",
+      "kartavya_patel": "absent",
+      "keyur_padiya": "absent",
+      "mayank_satapara": "absent",
+      "parva_parmar": "demonstrated"
+    },
+    "go": {
+      "jainish_parmar": "absent",
+      "aditya_dave": "absent",
+      "gaurav_rajpurohit": "absent",
+      "kartavya_patel": "absent",
+      "keyur_padiya": "absent",
+      "mayank_satapara": "absent",
+      "parva_parmar": "absent"
+    },
+    "java": {
+      "jainish_parmar": "absent",
+      "aditya_dave": "absent",
+      "gaurav_rajpurohit": "absent",
+      "kartavya_patel": "absent",
+      "keyur_padiya": "absent",
+      "mayank_satapara": "claimed_only",
+      "parva_parmar": "demonstrated"
+    },
+    "javascript": {
+      "jainish_parmar": "claimed_only",
+      "aditya_dave": "absent",
+      "gaurav_rajpurohit": "demonstrated",
+      "kartavya_patel": "absent",
+      "keyur_padiya": "absent",
+      "mayank_satapara": "demonstrated",
+      "parva_parmar": "demonstrated"
+    },
+    "kubernetes": {
+      "jainish_parmar": "demonstrated",
+      "aditya_dave": "absent",
+      "gaurav_rajpurohit": "absent",
+      "kartavya_patel": "absent",
+      "keyur_padiya": "absent",
+      "mayank_satapara": "absent",
+      "parva_parmar": "absent"
+    },
+    "linux": {
+      "jainish_parmar": "absent",
+      "aditya_dave": "absent",
+      "gaurav_rajpurohit": "absent",
+      "kartavya_patel": "absent",
+      "keyur_padiya": "absent",
+      "mayank_satapara": "claimed_only",
+      "parva_parmar": "absent"
+    },
+    "machine learning": {
+      "jainish_parmar": "demonstrated",
+      "aditya_dave": "absent",
+      "gaurav_rajpurohit": "demonstrated",
+      "kartavya_patel": "absent",
+      "keyur_padiya": "demonstrated",
+      "mayank_satapara": "demonstrated",
+      "parva_parmar": "absent"
+    },
+    "python": {
+      "jainish_parmar": "absent",
+      "aditya_dave": "claimed_only",
+      "gaurav_rajpurohit": "claimed_only",
+      "kartavya_patel": "absent",
+      "keyur_padiya": "absent",
+      "mayank_satapara": "absent",
+      "parva_parmar": "claimed_only"
+    },
+    "typescript": {
+      "jainish_parmar": "absent",
+      "aditya_dave": "absent",
+      "gaurav_rajpurohit": "absent",
+      "kartavya_patel": "absent",
+      "keyur_padiya": "absent",
+      "mayank_satapara": "absent",
+      "parva_parmar": "absent"
+    }
+  },
+  "system_skill_best_ce": {
+    "c": {
+      "jainish_parmar": 0.5874,
+      "aditya_dave": 0.5201,
+      "gaurav_rajpurohit": 0.6594,
+      "kartavya_patel": 0.7219,
+      "keyur_padiya": 0.5016,
+      "mayank_satapara": 0.5884,
+      "parva_parmar": 0.6443
+    },
+    "c++": {
+      "jainish_parmar": 0.7859,
+      "aditya_dave": 0.8,
+      "gaurav_rajpurohit": 0.8097,
+      "kartavya_patel": 0.7865,
+      "keyur_padiya": 0.7536,
+      "mayank_satapara": 0.7849,
+      "parva_parmar": 0.8683
+    },
+    "docker": {
+      "jainish_parmar": 0.0,
+      "aditya_dave": 0.0,
+      "gaurav_rajpurohit": 0.0,
+      "kartavya_patel": 0.0,
+      "keyur_padiya": 0.0,
+      "mayank_satapara": 0.0,
+      "parva_parmar": 0.6612
+    },
+    "go": {
+      "jainish_parmar": 0.0,
+      "aditya_dave": 0.0,
+      "gaurav_rajpurohit": 0.0,
+      "kartavya_patel": 0.0,
+      "keyur_padiya": 0.0,
+      "mayank_satapara": 0.0,
+      "parva_parmar": 0.0
+    },
+    "java": {
+      "jainish_parmar": 0.0,
+      "aditya_dave": 0.0,
+      "gaurav_rajpurohit": 0.0,
+      "kartavya_patel": 0.0,
+      "keyur_padiya": 0.0,
+      "mayank_satapara": 0.5382,
+      "parva_parmar": 0.6754
+    },
+    "javascript": {
+      "jainish_parmar": 0.536,
+      "aditya_dave": 0.0,
+      "gaurav_rajpurohit": 0.6438,
+      "kartavya_patel": 0.0,
+      "keyur_padiya": 0.0,
+      "mayank_satapara": 0.6023,
+      "parva_parmar": 0.748
+    },
+    "kubernetes": {
+      "jainish_parmar": 0.751,
+      "aditya_dave": 0.0,
+      "gaurav_rajpurohit": 0.0,
+      "kartavya_patel": 0.0,
+      "keyur_padiya": 0.0,
+      "mayank_satapara": 0.0,
+      "parva_parmar": 0.0
+    },
+    "linux": {
+      "jainish_parmar": 0.0,
+      "aditya_dave": 0.0,
+      "gaurav_rajpurohit": 0.0,
+      "kartavya_patel": 0.0,
+      "keyur_padiya": 0.0,
+      "mayank_satapara": 0.5502,
+      "parva_parmar": 0.0
+    },
+    "machine learning": {
+      "jainish_parmar": 0.6899,
+      "aditya_dave": 0.0,
+      "gaurav_rajpurohit": 0.7189,
+      "kartavya_patel": 0.0,
+      "keyur_padiya": 0.8029,
+      "mayank_satapara": 0.7256,
+      "parva_parmar": 0.0
+    },
+    "python": {
+      "jainish_parmar": 0.0,
+      "aditya_dave": 0.5554,
+      "gaurav_rajpurohit": 0.5201,
+      "kartavya_patel": 0.0,
+      "keyur_padiya": 0.0,
+      "mayank_satapara": 0.0,
+      "parva_parmar": 0.5748
+    },
+    "typescript": {
+      "jainish_parmar": 0.0,
+      "aditya_dave": 0.0,
+      "gaurav_rajpurohit": 0.0,
+      "kartavya_patel": 0.0,
+      "keyur_padiya": 0.0,
+      "mayank_satapara": 0.0,
+      "parva_parmar": 0.0
+    }
+  },
+  "predicted_grid": {
+    "R01": {
+      "aditya_dave": "claimed_only",
+      "gaurav_rajpurohit": "demonstrated",
+      "jainish_parmar": "claimed_only",
+      "kartavya_patel": "demonstrated",
+      "keyur_padiya": "claimed_only",
+      "mayank_satapara": "claimed_only",
+      "parva_parmar": "demonstrated"
+    },
+    "R02": {
+      "aditya_dave": "demonstrated",
+      "gaurav_rajpurohit": "demonstrated",
+      "jainish_parmar": "demonstrated",
+      "kartavya_patel": "demonstrated",
+      "keyur_padiya": "demonstrated",
+      "mayank_satapara": "demonstrated",
+      "parva_parmar": "demonstrated"
+    },
+    "R03": {
+      "aditya_dave": "claimed_only",
+      "gaurav_rajpurohit": "claimed_only",
+      "jainish_parmar": "absent",
+      "kartavya_patel": "absent",
+      "keyur_padiya": "absent",
+      "mayank_satapara": "absent",
+      "parva_parmar": "claimed_only"
+    },
+    "R04": {
+      "aditya_dave": "absent",
+      "gaurav_rajpurohit": "absent",
+      "jainish_parmar": "absent",
+      "kartavya_patel": "absent",
+      "keyur_padiya": "absent",
+      "mayank_satapara": "claimed_only",
+      "parva_parmar": "demonstrated"
+    },
+    "R05": {
+      "aditya_dave": "absent",
+      "gaurav_rajpurohit": "absent",
+      "jainish_parmar": "absent",
+      "kartavya_patel": "absent",
+      "keyur_padiya": "absent",
+      "mayank_satapara": "absent",
+      "parva_parmar": "absent"
+    },
+    "R06": {
+      "aditya_dave": "absent",
+      "gaurav_rajpurohit": "absent",
+      "jainish_parmar": "absent",
+      "kartavya_patel": "absent",
+      "keyur_padiya": "absent",
+      "mayank_satapara": "absent",
+      "parva_parmar": "absent"
+    },
+    "R07": {
+      "aditya_dave": "absent",
+      "gaurav_rajpurohit": "absent",
+      "jainish_parmar": "absent",
+      "kartavya_patel": "absent",
+      "keyur_padiya": "absent",
+      "mayank_satapara": "absent",
+      "parva_parmar": "absent"
+    },
+    "R08": {
+      "aditya_dave": "absent",
+      "gaurav_rajpurohit": "absent",
+      "jainish_parmar": "absent",
+      "kartavya_patel": "absent",
+      "keyur_padiya": "absent",
+      "mayank_satapara": "absent",
+      "parva_parmar": "absent"
+    },
+    "R09": {
+      "aditya_dave": "absent",
+      "gaurav_rajpurohit": "demonstrated",
+      "jainish_parmar": "claimed_only",
+      "kartavya_patel": "absent",
+      "keyur_padiya": "absent",
+      "mayank_satapara": "demonstrated",
+      "parva_parmar": "demonstrated"
+    },
+    "R10": {
+      "aditya_dave": "absent",
+      "gaurav_rajpurohit": "absent",
+      "jainish_parmar": "absent",
+      "kartavya_patel": "absent",
+      "keyur_padiya": "absent",
+      "mayank_satapara": "absent",
+      "parva_parmar": "absent"
+    },
+    "R11": {
+      "aditya_dave": "absent",
+      "gaurav_rajpurohit": "absent",
+      "jainish_parmar": "absent",
+      "kartavya_patel": "absent",
+      "keyur_padiya": "absent",
+      "mayank_satapara": "claimed_only",
+      "parva_parmar": "absent"
+    },
+    "R12": {
+      "aditya_dave": "absent",
+      "gaurav_rajpurohit": "absent",
+      "jainish_parmar": "absent",
+      "kartavya_patel": "absent",
+      "keyur_padiya": "absent",
+      "mayank_satapara": "absent",
+      "parva_parmar": "absent"
+    },
+    "R13": {
+      "aditya_dave": "absent",
+      "gaurav_rajpurohit": "absent",
+      "jainish_parmar": "absent",
+      "kartavya_patel": "absent",
+      "keyur_padiya": "absent",
+      "mayank_satapara": "absent",
+      "parva_parmar": "absent"
+    },
+    "R14": {
+      "aditya_dave": "absent",
+      "gaurav_rajpurohit": "absent",
+      "jainish_parmar": "absent",
+      "kartavya_patel": "absent",
+      "keyur_padiya": "absent",
+      "mayank_satapara": "absent",
+      "parva_parmar": "absent"
+    },
+    "R15": {
+      "aditya_dave": "absent",
+      "gaurav_rajpurohit": "absent",
+      "jainish_parmar": "absent",
+      "kartavya_patel": "absent",
+      "keyur_padiya": "absent",
+      "mayank_satapara": "absent",
+      "parva_parmar": "demonstrated"
+    },
+    "R16": {
+      "aditya_dave": "absent",
+      "gaurav_rajpurohit": "absent",
+      "jainish_parmar": "demonstrated",
+      "kartavya_patel": "absent",
+      "keyur_padiya": "absent",
+      "mayank_satapara": "absent",
+      "parva_parmar": "absent"
+    },
+    "R17": {
+      "aditya_dave": "absent",
+      "gaurav_rajpurohit": "absent",
+      "jainish_parmar": "absent",
+      "kartavya_patel": "absent",
+      "keyur_padiya": "absent",
+      "mayank_satapara": "absent",
+      "parva_parmar": "absent"
+    },
+    "R18": {
+      "aditya_dave": "absent",
+      "gaurav_rajpurohit": "absent",
+      "jainish_parmar": "absent",
+      "kartavya_patel": "absent",
+      "keyur_padiya": "absent",
+      "mayank_satapara": "absent",
+      "parva_parmar": "absent"
+    },
+    "R19": {
+      "aditya_dave": "absent",
+      "gaurav_rajpurohit": "absent",
+      "jainish_parmar": "absent",
+      "kartavya_patel": "absent",
+      "keyur_padiya": "absent",
+      "mayank_satapara": "absent",
+      "parva_parmar": "absent"
+    },
+    "R20": {
+      "aditya_dave": "absent",
+      "gaurav_rajpurohit": "absent",
+      "jainish_parmar": "absent",
+      "kartavya_patel": "absent",
+      "keyur_padiya": "absent",
+      "mayank_satapara": "absent",
+      "parva_parmar": "absent"
+    },
+    "R21": {
+      "aditya_dave": "absent",
+      "gaurav_rajpurohit": "absent",
+      "jainish_parmar": "absent",
+      "kartavya_patel": "absent",
+      "keyur_padiya": "absent",
+      "mayank_satapara": "absent",
+      "parva_parmar": "absent"
+    },
+    "R22": {
+      "aditya_dave": "absent",
+      "gaurav_rajpurohit": "demonstrated",
+      "jainish_parmar": "demonstrated",
+      "kartavya_patel": "absent",
+      "keyur_padiya": "demonstrated",
+      "mayank_satapara": "demonstrated",
+      "parva_parmar": "absent"
+    },
+    "R23": {
+      "aditya_dave": "absent",
+      "gaurav_rajpurohit": "absent",
+      "jainish_parmar": "absent",
+      "kartavya_patel": "absent",
+      "keyur_padiya": "absent",
+      "mayank_satapara": "absent",
+      "parva_parmar": "absent"
+    }
+  },
+  "gold_grid": {
+    "R01": {
+      "jainish_parmar": "claimed_only",
+      "aditya_dave": "demonstrated",
+      "gaurav_rajpurohit": "demonstrated",
+      "kartavya_patel": "demonstrated",
+      "keyur_padiya": "demonstrated",
+      "mayank_satapara": "demonstrated",
+      "parva_parmar": "claimed_only"
+    },
+    "R02": {
+      "jainish_parmar": "claimed_only",
+      "aditya_dave": "claimed_only",
+      "gaurav_rajpurohit": "claimed_only",
+      "kartavya_patel": "demonstrated",
+      "keyur_padiya": "claimed_only",
+      "mayank_satapara": "claimed_only",
+      "parva_parmar": "claimed_only"
+    },
+    "R03": {
+      "jainish_parmar": "demonstrated",
+      "aditya_dave": "demonstrated",
+      "gaurav_rajpurohit": "demonstrated",
+      "kartavya_patel": "absent",
+      "keyur_padiya": "demonstrated",
+      "mayank_satapara": "demonstrated",
+      "parva_parmar": "demonstrated"
+    },
+    "R04": {
+      "jainish_parmar": "demonstrated",
+      "aditya_dave": "claimed_only",
+      "gaurav_rajpurohit": "demonstrated",
+      "kartavya_patel": "demonstrated",
+      "keyur_padiya": "claimed_only",
+      "mayank_satapara": "demonstrated",
+      "parva_parmar": "claimed_only"
+    },
+    "R05": {
+      "jainish_parmar": "absent",
+      "aditya_dave": "claimed_only",
+      "gaurav_rajpurohit": "absent",
+      "kartavya_patel": "absent",
+      "keyur_padiya": "absent",
+      "mayank_satapara": "absent",
+      "parva_parmar": "absent"
+    },
+    "R06": {
+      "jainish_parmar": "demonstrated",
+      "aditya_dave": "demonstrated",
+      "gaurav_rajpurohit": "demonstrated",
+      "kartavya_patel": "demonstrated",
+      "keyur_padiya": "claimed_only",
+      "mayank_satapara": "claimed_only",
+      "parva_parmar": "demonstrated"
+    },
+    "R07": {
+      "jainish_parmar": "absent",
+      "aditya_dave": "demonstrated",
+      "gaurav_rajpurohit": "demonstrated",
+      "kartavya_patel": "demonstrated",
+      "keyur_padiya": "demonstrated",
+      "mayank_satapara": "demonstrated",
+      "parva_parmar": "absent"
+    },
+    "R08": {
+      "jainish_parmar": "claimed_only",
+      "aditya_dave": "absent",
+      "gaurav_rajpurohit": "absent",
+      "kartavya_patel": "absent",
+      "keyur_padiya": "absent",
+      "mayank_satapara": "claimed_only",
+      "parva_parmar": "claimed_only"
+    },
+    "R09": {
+      "jainish_parmar": "demonstrated",
+      "aditya_dave": "claimed_only",
+      "gaurav_rajpurohit": "demonstrated",
+      "kartavya_patel": "absent",
+      "keyur_padiya": "claimed_only",
+      "mayank_satapara": "demonstrated",
+      "parva_parmar": "demonstrated"
+    },
+    "R10": {
+      "jainish_parmar": "demonstrated",
+      "aditya_dave": "claimed_only",
+      "gaurav_rajpurohit": "demonstrated",
+      "kartavya_patel": "demonstrated",
+      "keyur_padiya": "claimed_only",
+      "mayank_satapara": "demonstrated",
+      "parva_parmar": "demonstrated"
+    },
+    "R11": {
+      "jainish_parmar": "demonstrated",
+      "aditya_dave": "claimed_only",
+      "gaurav_rajpurohit": "absent",
+      "kartavya_patel": "claimed_only",
+      "keyur_padiya": "demonstrated",
+      "mayank_satapara": "demonstrated",
+      "parva_parmar": "claimed_only"
+    },
+    "R12": {
+      "jainish_parmar": "demonstrated",
+      "aditya_dave": "claimed_only",
+      "gaurav_rajpurohit": "claimed_only",
+      "kartavya_patel": "absent",
+      "keyur_padiya": "demonstrated",
+      "mayank_satapara": "absent",
+      "parva_parmar": "claimed_only"
+    },
+    "R13": {
+      "jainish_parmar": "absent",
+      "aditya_dave": "claimed_only",
+      "gaurav_rajpurohit": "absent",
+      "kartavya_patel": "absent",
+      "keyur_padiya": "demonstrated",
+      "mayank_satapara": "demonstrated",
+      "parva_parmar": "absent"
+    },
+    "R14": {
+      "jainish_parmar": "absent",
+      "aditya_dave": "absent",
+      "gaurav_rajpurohit": "absent",
+      "kartavya_patel": "absent",
+      "keyur_padiya": "demonstrated",
+      "mayank_satapara": "absent",
+      "parva_parmar": "absent"
+    },
+    "R15": {
+      "jainish_parmar": "demonstrated",
+      "aditya_dave": "claimed_only",
+      "gaurav_rajpurohit": "absent",
+      "kartavya_patel": "absent",
+      "keyur_padiya": "demonstrated",
+      "mayank_satapara": "claimed_only",
+      "parva_parmar": "demonstrated"
+    },
+    "R16": {
+      "jainish_parmar": "demonstrated",
+      "aditya_dave": "absent",
+      "gaurav_rajpurohit": "absent",
+      "kartavya_patel": "absent",
+      "keyur_padiya": "absent",
+      "mayank_satapara": "claimed_only",
+      "parva_parmar": "absent"
+    },
+    "R17": {
+      "jainish_parmar": "demonstrated",
+      "aditya_dave": "claimed_only",
+      "gaurav_rajpurohit": "absent",
+      "kartavya_patel": "claimed_only",
+      "keyur_padiya": "demonstrated",
+      "mayank_satapara": "claimed_only",
+      "parva_parmar": "absent"
+    },
+    "R18": {
+      "jainish_parmar": "demonstrated",
+      "aditya_dave": "claimed_only",
+      "gaurav_rajpurohit": "demonstrated",
+      "kartavya_patel": "demonstrated",
+      "keyur_padiya": "demonstrated",
+      "mayank_satapara": "demonstrated",
+      "parva_parmar": "absent"
+    },
+    "R19": {
+      "jainish_parmar": "demonstrated",
+      "aditya_dave": "absent",
+      "gaurav_rajpurohit": "absent",
+      "kartavya_patel": "absent",
+      "keyur_padiya": "absent",
+      "mayank_satapara": "absent",
+      "parva_parmar": "absent"
+    },
+    "R20": {
+      "jainish_parmar": "demonstrated",
+      "aditya_dave": "absent",
+      "gaurav_rajpurohit": "absent",
+      "kartavya_patel": "demonstrated",
+      "keyur_padiya": "absent",
+      "mayank_satapara": "absent",
+      "parva_parmar": "absent"
+    },
+    "R21": {
+      "jainish_parmar": "demonstrated",
+      "aditya_dave": "demonstrated",
+      "gaurav_rajpurohit": "absent",
+      "kartavya_patel": "absent",
+      "keyur_padiya": "absent",
+      "mayank_satapara": "absent",
+      "parva_parmar": "claimed_only"
+    },
+    "R22": {
+      "jainish_parmar": "claimed_only",
+      "aditya_dave": "demonstrated",
+      "gaurav_rajpurohit": "demonstrated",
+      "kartavya_patel": "claimed_only",
+      "keyur_padiya": "demonstrated",
+      "mayank_satapara": "demonstrated",
+      "parva_parmar": "absent"
+    },
+    "R23": {
+      "jainish_parmar": "absent",
+      "aditya_dave": "demonstrated",
+      "gaurav_rajpurohit": "demonstrated",
+      "kartavya_patel": "demonstrated",
+      "keyur_padiya": "absent",
+      "mayank_satapara": "demonstrated",
+      "parva_parmar": "demonstrated"
+    }
+  },
+  "kendall_tau": {
+    "kendall_tau": 1.0,
+    "n_candidates": 7,
+    "caveat": "(n=7; illustrative only, not a statistically meaningful ranking benchmark)",
+    "report": "kendall_tau=1.000 (n=7; illustrative only, not a statistically meaningful ranking benchmark)"
+  },
+  "predicted_ranking": [
+    "jainish_parmar",
+    "mayank_satapara",
+    "keyur_padiya",
+    "gaurav_rajpurohit",
+    "kartavya_patel",
+    "aditya_dave",
+    "parva_parmar"
+  ],
+  "hand_ranking": [
+    "jainish_parmar",
+    "mayank_satapara",
+    "keyur_padiya",
+    "gaurav_rajpurohit",
+    "kartavya_patel",
+    "aditya_dave",
+    "parva_parmar"
+  ],
+  "candidate_verdict_times_s": [
+    [
+      "jainish_parmar",
+      16.05
+    ],
+    [
+      "aditya_dave",
+      3.26
+    ],
+    [
+      "gaurav_rajpurohit",
+      3.53
+    ],
+    [
+      "kartavya_patel",
+      3.11
+    ],
+    [
+      "keyur_padiya",
+      3.3
+    ],
+    [
+      "mayank_satapara",
+      3.43
+    ],
+    [
+      "parva_parmar",
+      3.13
+    ]
+  ]
+}

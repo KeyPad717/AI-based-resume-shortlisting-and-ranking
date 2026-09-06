@@ -189,15 +189,21 @@ def test_ablation_run_returns_all_configs():
     ablation = RetrievalAblation(store, FakeEmbedder(), reranker=CrossEncoderReranker(model=FakeCrossEncoder([1.0, 1.0, 1.0])))
     configs = ["dense_only", "bm25_only", "hybrid", "hybrid_ce"]
     results = ablation.run(gold_pairs, configs)
-    # All requested config keys present, float values in [0,1].
+    # All requested config keys present; since Phase 9 the per-config row is a
+    # dict {"recall@3", "pairs", "hit"} (the old bare-float shape was replaced).
     for cfg in configs:
         assert cfg in results, "missing config %s in ablation results %r" % (cfg, results)
-        assert isinstance(results[cfg], float)
-        assert 0.0 <= results[cfg] <= 1.0
+        row = results[cfg]
+        assert "recall@3" in row, "missing recall@3 for %s in %r" % (cfg, row)
+        assert isinstance(row["recall@3"], float)
+        assert 0.0 <= row["recall@3"] <= 1.0
+        assert row["pairs"] == 2
     # Sanity: hybrid should be at least as good as either single-signal config
     # on this gold set (RRF can only add), and ce should not reduce beyond 0.
-    assert results["hybrid"] >= min(results["dense_only"], results["bm25_only"])
-    print("SYNTHETIC ablation (harness validation, NOT real Phase 9): %s" % results)
+    assert results["hybrid"]["recall@3"] >= min(
+        results["dense_only"]["recall@3"], results["bm25_only"]["recall@3"])
+    print("SYNTHETIC ablation (harness validation, NOT real Phase 9): %s"
+          % {k: v["recall@3"] for k, v in results.items()})
 
 
 if __name__ == "__main__":
