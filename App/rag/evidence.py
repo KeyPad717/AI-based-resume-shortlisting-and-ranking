@@ -193,8 +193,12 @@ class EvidenceVerifier:
                 raw = response.choices[0].message.content.strip()
                 raw = re.sub(r"^```json\s*|^```\s*|```$", "", raw, flags=re.MULTILINE).strip()
                 data = json.loads(raw)
-                # Accept either a bare list or {"verdicts": [...]}.
-                parsed = data if isinstance(data, list) else data.get("verdicts", [])
+                parsed = data if isinstance(data, list) else None
+                if isinstance(data, dict):
+                    for value in data.values():
+                        if isinstance(value, list) and value:
+                            parsed = value
+                            break
                 if isinstance(parsed, list) and parsed:
                     return parsed
                 return None

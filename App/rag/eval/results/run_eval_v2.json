@@ -1,9 +1,9 @@
 {
-  "evaluation_id": "run_eval_v1",
+  "evaluation_id": "run_eval_v2",
   "date": "2026-09-06",
   "environment": {
-    "openrouter_api_key": false,
-    "llm_additive": "OFF",
+    "openrouter_api_key": true,
+    "llm_additive": "ON",
     "embedder": "sentence-transformers/all-mpnet-base-v2",
     "cross_encoder": "cross-encoder/ms-marco-MiniLM-L-6-v2",
     "esco": "No real ESCO dataset (ESCO_SKILLS_CSV unset) - using the SYNTHETIC 15-concept stand-in from scripts/build_esco_index.py. Ontology-expansion results are illustrative only and cannot generalize to the real taxonomy."
@@ -23,7 +23,7 @@
   ],
   "gold_rows_with_alias": 10,
   "gold_rows_without_alias": 13,
-  "index_build_s": 11.77,
+  "index_build_s": 10.889,
   "retrieval_ablation": {
     "dense_only": {
       "recall@3": 0.6323529411764706,
@@ -55,46 +55,46 @@
       "gap": "hybrid_ce+header_prefix: prefix_context() is not wired into chunking/indexing (chunking.py reserves it for a later phase), so no chunk is embedded with a section header today; this row cannot be measured without changing the ingest path (out of scope for evaluation phase)."
     }
   },
-  "ablation_wall_s": 46.727,
+  "ablation_wall_s": 43.582,
   "verdict_accuracy": {
-    "accuracy": 0.4161490683229814,
-    "correct": 67,
+    "accuracy": 0.453416149068323,
+    "correct": 73,
     "total": 161,
     "per_gold_verdict": {
-      "demonstrated": 0.16176470588235295,
-      "claimed_only": 0.02631578947368421,
+      "demonstrated": 0.11764705882352941,
+      "claimed_only": 0.2631578947368421,
       "absent": 1.0
     }
   },
   "false_missing_skill_rate": {
-    "false_missing_skill_rate": 0.8382352941176471,
+    "false_missing_skill_rate": 0.8823529411764706,
     "gold_demonstrated": 68,
-    "predicted_demonstrated": 11,
-    "missed": 57,
+    "predicted_demonstrated": 8,
+    "missed": 60,
     "by_candidate": {
-      "aditya_dave": [
-        61,
-        7
-      ],
       "keyur_padiya": [
-        58,
-        10
+        57,
+        11
       ],
       "mayank_satapara": [
         59,
         9
       ],
       "jainish_parmar": [
-        55,
-        13
+        54,
+        14
+      ],
+      "aditya_dave": [
+        62,
+        6
       ],
       "gaurav_rajpurohit": [
-        61,
-        7
+        60,
+        8
       ],
       "parva_parmar": [
-        64,
-        4
+        63,
+        5
       ],
       "kartavya_patel": [
         61,
@@ -105,21 +105,21 @@
   "system_skill_verdicts": {
     "c": {
       "jainish_parmar": "claimed_only",
-      "aditya_dave": "claimed_only",
+      "aditya_dave": "demonstrated",
       "gaurav_rajpurohit": "demonstrated",
       "kartavya_patel": "demonstrated",
       "keyur_padiya": "claimed_only",
       "mayank_satapara": "claimed_only",
-      "parva_parmar": "demonstrated"
+      "parva_parmar": "claimed_only"
     },
     "c++": {
-      "jainish_parmar": "demonstrated",
-      "aditya_dave": "demonstrated",
-      "gaurav_rajpurohit": "demonstrated",
+      "jainish_parmar": "claimed_only",
+      "aditya_dave": "claimed_only",
+      "gaurav_rajpurohit": "claimed_only",
       "kartavya_patel": "demonstrated",
-      "keyur_padiya": "demonstrated",
-      "mayank_satapara": "demonstrated",
-      "parva_parmar": "demonstrated"
+      "keyur_padiya": "claimed_only",
+      "mayank_satapara": "claimed_only",
+      "parva_parmar": "claimed_only"
     },
     "docker": {
       "jainish_parmar": "absent",
@@ -146,19 +146,19 @@
       "kartavya_patel": "absent",
       "keyur_padiya": "absent",
       "mayank_satapara": "claimed_only",
-      "parva_parmar": "demonstrated"
+      "parva_parmar": "claimed_only"
     },
     "javascript": {
       "jainish_parmar": "claimed_only",
       "aditya_dave": "absent",
-      "gaurav_rajpurohit": "demonstrated",
+      "gaurav_rajpurohit": "claimed_only",
       "kartavya_patel": "absent",
       "keyur_padiya": "absent",
-      "mayank_satapara": "demonstrated",
-      "parva_parmar": "demonstrated"
+      "mayank_satapara": "claimed_only",
+      "parva_parmar": "claimed_only"
     },
     "kubernetes": {
-      "jainish_parmar": "demonstrated",
+      "jainish_parmar": "claimed_only",
       "aditya_dave": "absent",
       "gaurav_rajpurohit": "absent",
       "kartavya_patel": "absent",
@@ -172,15 +172,15 @@
       "gaurav_rajpurohit": "absent",
       "kartavya_patel": "absent",
       "keyur_padiya": "absent",
-      "mayank_satapara": "claimed_only",
+      "mayank_satapara": "demonstrated",
       "parva_parmar": "absent"
     },
     "machine learning": {
-      "jainish_parmar": "demonstrated",
+      "jainish_parmar": "claimed_only",
       "aditya_dave": "absent",
       "gaurav_rajpurohit": "demonstrated",
       "kartavya_patel": "absent",
-      "keyur_padiya": "demonstrated",
+      "keyur_padiya": "claimed_only",
       "mayank_satapara": "demonstrated",
       "parva_parmar": "absent"
     },
@@ -306,22 +306,22 @@
   },
   "predicted_grid": {
     "R01": {
-      "aditya_dave": "claimed_only",
+      "aditya_dave": "demonstrated",
       "gaurav_rajpurohit": "demonstrated",
       "jainish_parmar": "claimed_only",
       "kartavya_patel": "demonstrated",
       "keyur_padiya": "claimed_only",
       "mayank_satapara": "claimed_only",
-      "parva_parmar": "demonstrated"
+      "parva_parmar": "claimed_only"
     },
     "R02": {
-      "aditya_dave": "demonstrated",
-      "gaurav_rajpurohit": "demonstrated",
-      "jainish_parmar": "demonstrated",
+      "aditya_dave": "claimed_only",
+      "gaurav_rajpurohit": "claimed_only",
+      "jainish_parmar": "claimed_only",
       "kartavya_patel": "demonstrated",
-      "keyur_padiya": "demonstrated",
-      "mayank_satapara": "demonstrated",
-      "parva_parmar": "demonstrated"
+      "keyur_padiya": "claimed_only",
+      "mayank_satapara": "claimed_only",
+      "parva_parmar": "claimed_only"
     },
     "R03": {
       "aditya_dave": "claimed_only",
@@ -339,7 +339,7 @@
       "kartavya_patel": "absent",
       "keyur_padiya": "absent",
       "mayank_satapara": "claimed_only",
-      "parva_parmar": "demonstrated"
+      "parva_parmar": "claimed_only"
     },
     "R05": {
       "aditya_dave": "absent",
@@ -379,12 +379,12 @@
     },
     "R09": {
       "aditya_dave": "absent",
-      "gaurav_rajpurohit": "demonstrated",
+      "gaurav_rajpurohit": "claimed_only",
       "jainish_parmar": "claimed_only",
       "kartavya_patel": "absent",
       "keyur_padiya": "absent",
-      "mayank_satapara": "demonstrated",
-      "parva_parmar": "demonstrated"
+      "mayank_satapara": "claimed_only",
+      "parva_parmar": "claimed_only"
     },
     "R10": {
       "aditya_dave": "absent",
@@ -401,7 +401,7 @@
       "jainish_parmar": "absent",
       "kartavya_patel": "absent",
       "keyur_padiya": "absent",
-      "mayank_satapara": "claimed_only",
+      "mayank_satapara": "demonstrated",
       "parva_parmar": "absent"
     },
     "R12": {
@@ -443,7 +443,7 @@
     "R16": {
       "aditya_dave": "absent",
       "gaurav_rajpurohit": "absent",
-      "jainish_parmar": "demonstrated",
+      "jainish_parmar": "claimed_only",
       "kartavya_patel": "absent",
       "keyur_padiya": "absent",
       "mayank_satapara": "absent",
@@ -497,9 +497,9 @@
     "R22": {
       "aditya_dave": "absent",
       "gaurav_rajpurohit": "demonstrated",
-      "jainish_parmar": "demonstrated",
+      "jainish_parmar": "claimed_only",
       "kartavya_patel": "absent",
-      "keyur_padiya": "demonstrated",
+      "keyur_padiya": "claimed_only",
       "mayank_satapara": "demonstrated",
       "parva_parmar": "absent"
     },
@@ -749,31 +749,143 @@
   "candidate_verdict_times_s": [
     [
       "jainish_parmar",
-      16.56
+      18.22
     ],
     [
       "aditya_dave",
-      3.97
+      5.76
     ],
     [
       "gaurav_rajpurohit",
-      3.55
+      6.6
     ],
     [
       "kartavya_patel",
-      3.27
+      4.54
     ],
     [
       "keyur_padiya",
-      3.47
+      3.77
     ],
     [
       "mayank_satapara",
-      3.53
+      5.96
     ],
     [
       "parva_parmar",
-      3.47
+      6.94
     ]
-  ]
+  ],
+  "three_tier_classification": {
+    "a_keyword_window": {
+      "c": "required",
+      "c++": "required",
+      "docker": "required",
+      "go": "required",
+      "java": "required",
+      "javascript": "required",
+      "kubernetes": "required",
+      "linux": "required",
+      "machine learning": "required",
+      "python": "required",
+      "typescript": "required"
+    },
+    "b_classify_requirement_type": {
+      "c": "required",
+      "c++": "required",
+      "docker": "preferred",
+      "go": "required",
+      "java": "required",
+      "javascript": "required",
+      "kubernetes": "preferred",
+      "linux": "required",
+      "machine learning": "preferred",
+      "python": "required",
+      "typescript": "preferred"
+    },
+    "b_fell_back_to_keywords": false,
+    "c_skillnormalizer_llm": {
+      "c": "required",
+      "c++": "required",
+      "docker": "preferred",
+      "go": "required",
+      "java": "required",
+      "javascript": "required",
+      "kubernetes": "preferred",
+      "linux": "required",
+      "machine learning": "preferred",
+      "python": "required",
+      "typescript": "required"
+    },
+    "jd_reference_tiers": {
+      "c": "required",
+      "c++": "required",
+      "python": "required",
+      "java": "required",
+      "go": "required",
+      "javascript": "required",
+      "typescript": "required",
+      "linux": "required",
+      "docker": "preferred",
+      "kubernetes": "preferred",
+      "machine learning": "preferred"
+    },
+    "agreement_ab": 0.6363636363636364,
+    "agreement_ac": 0.7272727272727273,
+    "agreement_bc": 0.9090909090909091,
+    "accuracy_a_vs_jd": 0.7272727272727273,
+    "accuracy_b_vs_jd": 0.9090909090909091,
+    "accuracy_c_vs_jd": 1.0,
+    "normalized_requirement_sources": [
+      "llm_classifier"
+    ],
+    "source_distribution": {
+      "llm_classifier": 11
+    },
+    "verdict_grid_tier_note": "NormalizedRequirement.tier is not consulted by the evidence retrieval/verdict path, so verdict accuracy is identical across tiers a/b/c (which differ only in required/preferred assignment)."
+  },
+  "llm_extraction_diagnostic": {
+    "n_skills": 20,
+    "skills": [
+      "C/C++",
+      "CI/CD",
+      "CloudStack",
+      "Docker",
+      "Golang",
+      "Java",
+      "JavaScript",
+      "Kubernetes",
+      "Linux",
+      "NodeJS",
+      "OpenStack",
+      "Pytest",
+      "Python",
+      "Python scripting",
+      "REST APIs",
+      "TCP/IP",
+      "TypeScript",
+      "automation",
+      "distributed systems",
+      "microservices"
+    ],
+    "fallback_sentinel": false
+  },
+  "llm_usage": {
+    "provider": "OpenRouter (openai/gpt-4o-mini)",
+    "calls": 10,
+    "prompt_tokens": 6677,
+    "completion_tokens": 2119,
+    "total_tokens": 8796,
+    "llm_wall_s": 31.746,
+    "http_errors": 0
+  },
+  "evidence_fallback_candidates": 0,
+  "citation_proposed": 30,
+  "citation_rejected": 1,
+  "citation_validity": {
+    "proposed": 30,
+    "rejected": 1,
+    "accepted": 29,
+    "citation_validity_rate": 0.9666666666666667
+  }
 }
