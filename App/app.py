@@ -20,6 +20,7 @@ from pipeline import (
     clean_text,
     validate_extracted_struct,
     call_llm_extraction,
+    _get_llm_dispatcher,
     experience_score,
     education_score,
     project_score,
@@ -206,7 +207,8 @@ def _evidence_detail(job: dict, candidate_id: str, skill: Optional[str]):
     from rag.evidence import CitationValidator, EvidenceVerifier
 
     rt = get_rag_stores()
-    normalizer = SkillNormalizer(rt["ontology_store"], rt["embedder"], rt["llm_client"])
+    dispatcher = _get_llm_dispatcher(rt["llm_client"])
+    normalizer = SkillNormalizer(rt["ontology_store"], rt["embedder"], rt["llm_client"], dispatcher=dispatcher)
     skill_retriever = SkillEvidenceRetriever(
         HybridRetriever(rt["resume_store"], rt["embedder"], RRFFuser()),
         rt["reranker"],
@@ -225,6 +227,7 @@ def _evidence_detail(job: dict, candidate_id: str, skill: Optional[str]):
         rt["llm_client"],
         CitationValidator(),
         alt_labels_provider=normalizer.alt_labels_for,
+        dispatcher=dispatcher,
     )
     evidence = verifier.verify(candidate_id, reqs)
     verdicts = {v.skill_name: v for v in evidence.verdicts}
@@ -343,7 +346,12 @@ async def create_job(
 
     rt = get_rag_stores()
     from rag.ontology import SkillNormalizer
-    normalizer = SkillNormalizer(rt["ontology_store"], rt["embedder"], rt["llm_client"])
+    # Phase 10: one shared LLM dispatcher (content cache + JSONL log + concurrency
+    # + cost ceiling) for all LLM calls belonging to this job, and a fresh
+    # per-job cost budget so one job's spend never carries into the next.
+    dispatcher = _get_llm_dispatcher(rt["llm_client"])
+    dispatcher.reset_budget()
+    normalizer = SkillNormalizer(rt["ontology_store"], rt["embedder"], rt["llm_client"], dispatcher=dispatcher)
     requirements = normalizer.normalize(jd_text, jd_struct["skills"])
 
     _jobs[job_id] = {

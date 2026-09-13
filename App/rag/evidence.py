@@ -12,11 +12,9 @@ batched LLM verdict call fails): a span with cross_encoder_score > 0.6 is
 
 from __future__ import annotations
 
-import json
-import re
 import time
 
-from rag.prompts import EVIDENCE_VERDICT_MODEL, build_evidence_prompt
+from rag.prompts import EVIDENCE_VERDICT_MODEL, EVIDENCE_VERDICT_PROMPT_VERSION, build_evidence_prompt
 from rag.retrieval import CE_RELEVANCE_FLOOR, SkillEvidenceRetriever
 from rag.schemas import CandidateEvidence, EvidenceSpan, NormalizedRequirement, SkillVerdict
 
@@ -102,6 +100,7 @@ class EvidenceVerifier:
         llm_client,
         validator: CitationValidator,
         alt_labels_provider=None,
+        dispatcher=None,
     ):
         self._retriever = retriever
         self._llm_client = llm_client
@@ -110,6 +109,18 @@ class EvidenceVerifier:
         #alt_labels_for). Additive beyond the spec'd three args so the wiring
         # phase can supply real ESCO alt labels without changing the core API.
         self._alt_labels_provider = alt_labels_provider
+        # Phase 10: optionally-shared LLM dispatcher (cache + log + budget),
+        # so identical evidence prompts short-circuit to zero LLM spend and the
+        # per-job cost ceiling can gate the deterministic fallback. When None, a
+        # per-instance dispatcher is built lazily (test/standalone default).
+        self._dispatcher = dispatcher
+
+    def _get_dispatcher(self):
+        if self._dispatcher is None:
+            from rag.llm_call import LLMDispatcher
+
+            self._dispatcher = LLMDispatcher.build(self._llm_client)
+        return self._dispatcher
 
     def _alt_labels_for(self, skill: str) -> list[str]:
         if self._alt_labels_provider is None:
@@ -185,14 +196,18 @@ class EvidenceVerifier:
         prompt = build_evidence_prompt(candidate_id, with_spans)
         for attempt in range(_EVIDENCE_RETRIES):
             try:
-                response = self._llm_client.chat.completions.create(
+                # Phase 10: dispatch through the shared content-addressed cache
+                # + per-job cost budget. A None return means the budget ceiling
+                # was hit — retrying is pointless and would only keep spending,
+                # so fall straight to the deterministic CE-score path.
+                data = self._get_dispatcher().call(
+                    op="evidence",
+                    prompt=prompt,
                     model=EVIDENCE_VERDICT_MODEL,
-                    messages=[{"role": "user", "content": prompt}],
-                    response_format={"type": "json_object"},
+                    cache_version=EVIDENCE_VERDICT_PROMPT_VERSION,
                 )
-                raw = response.choices[0].message.content.strip()
-                raw = re.sub(r"^```json\s*|^```\s*|```$", "", raw, flags=re.MULTILINE).strip()
-                data = json.loads(raw)
+                if data is None:
+                    return None
                 parsed = data if isinstance(data, list) else None
                 if isinstance(data, dict):
                     for value in data.values():

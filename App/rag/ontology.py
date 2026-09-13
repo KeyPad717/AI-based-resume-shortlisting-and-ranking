@@ -22,8 +22,6 @@ pays that cost.
 
 from __future__ import annotations
 
-import json
-import re
 import time
 
 from rag.config import RagSettings
@@ -46,18 +44,28 @@ ONTOLOGY_MATCH_FLOOR = 0.3
 # LLM classifier config, mirroring Phase 0's classify_requirement_type.
 _CLASSIFY_MODEL = "openai/gpt-4o-mini"
 _CLASSIFY_RETRIES = 2
-
-
-def _strip_code_fence(raw):
-    return re.sub(r"^```json\s*|^```\s*|```$", "", raw, flags=re.MULTILINE).strip()
+# Phase 10: content-cache version stamp. Bump when the prompt changes so a new
+# prompt never reuses an old cached classification.
+_CLASSIFY_PROMPT_VERSION = "v1"
 
 
 class SkillNormalizer:
-    def __init__(self, ontology_store: VectorStore, embedder: EmbeddingService, llm_client):
+    def __init__(self, ontology_store: VectorStore, embedder: EmbeddingService, llm_client, dispatcher=None):
         self.ontology_store = ontology_store
         self.embedder = embedder
         self.llm_client = llm_client
         self.settings = RagSettings()
+        # Phase 10: optionally-shared LLM dispatcher (cache + log + budget).
+        # When None, a per-instance dispatcher is built lazily (default for
+        # tests/standalone use); production wiring injects the shared one.
+        self._dispatcher = dispatcher
+
+    def _get_dispatcher(self):
+        if self._dispatcher is None:
+            from rag.llm_call import LLMDispatcher
+
+            self._dispatcher = LLMDispatcher.build(self.llm_client, self.settings)
+        return self._dispatcher
 
     # -- ontology lookup ----------------------------------------------------
 
@@ -105,14 +113,19 @@ class SkillNormalizer:
 
         for attempt in range(_CLASSIFY_RETRIES):
             try:
-                response = self.llm_client.chat.completions.create(
+                # Phase 10: dispatch through the shared content-addressed cache
+                # so re-normalizing the same JD makes zero LLM calls.
+                payload = self._get_dispatcher().call(
+                    op="classify",
+                    prompt=prompt,
                     model=_CLASSIFY_MODEL,
-                    messages=[{"role": "user", "content": prompt}],
-                    response_format={"type": "json_object"},
+                    cache_version=_CLASSIFY_PROMPT_VERSION,
                 )
-                raw = response.choices[0].message.content.strip()
-                raw = _strip_code_fence(raw)
-                result = json.loads(raw)
+                # None => budget exhausted or unparseable body: no point retrying
+                # (a blocked budget stays blocked), so fall straight to fallback.
+                if payload is None:
+                    return None
+                result = payload
                 if (
                     isinstance(result, dict)
                     and isinstance(result.get("required"), list)

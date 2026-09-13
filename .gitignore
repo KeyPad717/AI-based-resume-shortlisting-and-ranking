@@ -91,6 +91,10 @@ docs/
 *.bak
 *.tmp
 
+# Phase 10: on-disk LLM cache + JSONL call logs (built lazily by rag/llm_*)
+.rag_cache/
+.rag_logs/
+
 # IDEs
 .vscode/
 .idea/
